@@ -16,9 +16,9 @@ Currently the project is developing the user interface and menu system before
 beginning on the games. If you'd like to get involved, check out the TODO list
 for the next jobs that need doing. Some of these are pretty easy!
 
-<TODO>:
-[ ] UPPERCASE letters and more punctuation in letters.py ALPHABET
-[ ] Pretty animations for loading and linking in animations.py
-[ ] Design menu system, perhaps colour coded or icons. Words will be annoying
-[ ] Make a score display animation, e.g.: "Score: 12  12  12" in animations.py
-[ ] Implement a proper FPS (frames per second) system, better than time.sleep()!
+\<TODO\>:
+- [ ] UPPERCASE letters and more punctuation in letters.py ALPHABET
+- [ ] Pretty animations for loading and linking in animations.py
+- [ ] Design menu system, perhaps colour coded or icons. Words will be  annoying
+- [ ] Make a score display animation, e.g.: "Score: 12  12  12" in animations.py
+- [ ] Implement a proper FPS (frames per second) system, better than time.sleep()!
