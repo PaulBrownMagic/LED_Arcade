@@ -38,15 +38,3 @@ class SenseHatDisplay:
 
     def show_message(self, phrase, **kwargs):
         self.sense_hat.show_message(phrase, **kwargs)
-
-
-if __name__ == "__main__":
-    import numpy as np
-    import time
-    grid = np.zeros([8, 8, 3])
-    display = UnicornDisplay()
-    for _ in range(20):
-        grid += 10
-        display.update(grid)
-        time.sleep(0.5)
-    display.update(np.zeros([8, 8, 3]))

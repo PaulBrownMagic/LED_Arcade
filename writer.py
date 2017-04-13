@@ -27,10 +27,3 @@ class Writer:
         self.make_phrase(phrase)
         for frame in self.generate_frames():
             yield frame
-
-if __name__ == "__main__":
-    import time
-    w = Writer()
-    for frame in w.write("Hello world"):
-        print(frame)
-        time.sleep(0.2)
