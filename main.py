@@ -3,6 +3,7 @@ import animations
 import displays
 import inputs
 import numpy as np
+import snake
 import time
 
 
@@ -21,6 +22,8 @@ class Arcade:
         self.state = "Welcome"
         self.controller = inputs.SenseHatInput()
         self.events = []
+        self.game = snake.Game()
+
         animations.welcome(self.display)
 
     def get_input(self):
@@ -32,11 +35,14 @@ class Arcade:
 
     def run_logic(self):
         """Call state's run_logic and handle state change"""
-        pass
+        self.game.run_logic(self.events)
 
     def update_display(self):
         """show the grid on self.display"""
-        self.display.update(self.grid)
+        if self.state == "Exit":
+            self.display.update(self.grid)
+        else:
+            self.display.update(self.game.update_display())
 
     def game_loop(self):
         """Run the program until exit state is called"""
