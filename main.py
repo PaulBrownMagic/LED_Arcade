@@ -16,7 +16,7 @@ class Arcade:
 
     def __init__(self):
         self.grid = np.zeros([8,8,3], dtype=int)
-        self.display = displays.UnicornDisplay()
+        self.display = displays.SenseHatDisplay()
         self.state = "Welcome"
         self.controller = None
         animations.welcome(self.display)

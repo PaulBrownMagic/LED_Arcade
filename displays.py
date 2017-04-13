@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 import unicornhat as unicorn
+from sense_hat import SenseHat
 
 
 class UnicornDisplay:
@@ -14,6 +15,17 @@ class UnicornDisplay:
     def update(self, grid):
         unicorn.set_pixels(grid.tolist())
         unicorn.show()
+
+class SenseHatDisplay:
+    """Official SenseHat"""
+
+    def __init__(self):
+        self.sense_hat = SenseHat()
+        self.sense_hat.set_rotation(0)
+
+    def update(self, grid):
+        self.sense_hat.set_pixels(grid.reshape([64, 3]).tolist())
+
 
 if __name__ == "__main__":
     import numpy as np
