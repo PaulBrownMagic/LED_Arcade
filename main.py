@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import animations
 import displays
+import inputs
 import numpy as np
 import time
 
@@ -18,16 +19,20 @@ class Arcade:
         self.grid = np.zeros([8,8,3], dtype=int)
         self.display = displays.SenseHatDisplay()
         self.state = "Welcome"
-        self.controller = None
+        self.controller = inputs.SenseHatInput()
+        self.events = []
         animations.welcome(self.display)
 
     def get_input(self):
         """Get input from controller, pass to state"""
-        pass
+        self.events = self.controller.get_events()
+        for event in self.events:
+            if event == "middle":
+                self.state = "Exit"
 
     def run_logic(self):
         """Call state's run_logic and handle state change"""
-        self.state = "Exit"
+        pass
 
     def update_display(self):
         """show the grid on self.display"""
