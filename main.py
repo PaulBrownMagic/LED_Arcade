@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import animations
-import displays
-import inputs
+from displays.sensehat_display import SenseHatDisplay
+from inputs.sensehat_input import SenseHatInput
 import numpy as np
 from games import snake
 import time
@@ -17,21 +17,20 @@ class Arcade:
     """
 
     def __init__(self):
-        self.display = displays.SenseHatDisplay()
-        self.controller = inputs.SenseHatInput()
+        self.display = SenseHatDisplay()
+        self.controller = SenseHatInput()
         self.game = snake.Game()
         self.state = "Welcome"
-        self.events = None
 
         animations.welcome(self.display)
 
     def get_input(self):
         """Get input from controller, pass to state"""
-        self.events = self.controller.get_events()
-        for event in self.events:
+        events = self.controller.get_events()
+        for event in events:
             if event == "middle":
                 self.state = "Exit"
-        self.game.handle_events(self.events)
+        self.game.handle_events(events)
 
     def run_logic(self):
         """Call state's run_logic and handle state change"""
@@ -54,7 +53,7 @@ class Arcade:
             self.get_input()
             self.run_logic()
             self.update_display()
-            time.sleep(0.1)
+            time.sleep(self.game.fps)
 
 
 if __name__ == "__main__":

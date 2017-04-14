@@ -1,5 +1,6 @@
 from sense_hat import SenseHat, ACTION_RELEASED
 
+
 class SenseHatInput:
 
     def __init__(self):

@@ -1,5 +1,6 @@
 import numpy as np
-from letters import ALPHABET
+from displays.letters import ALPHABET
+
 
 class Writer:
     """Produce scrolling text for the LED display, frame by frame"""

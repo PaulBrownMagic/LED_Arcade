@@ -1,0 +1,2 @@
+numpy>=1.12.1
+# SenseHat and UnicornHat libraries may also be required, depending on use.

@@ -1,7 +1,8 @@
-from constants import SNAKE_COLOURS
-from constants import WHITE, GREEN, DARK_BLUE
+from games.constants import SNAKE_COLOURS
+from games.constants import WHITE, GREEN, DARK_RED
 import numpy as np
 import random
+
 
 class Snake():
     """The player character, a snake that runs around eating food"""
@@ -77,8 +78,9 @@ class Food():
         #give food a random colour from list of colours. List ensures visible strong colours
         self.colour = random.choice(SNAKE_COLOURS)
 
-#game class
+
 class Game(object):
+    fps = 0.1
 
     def __init__(self):
         self.snake = None
@@ -86,7 +88,6 @@ class Game(object):
         self.game_over = False
         self.score = 0
         self.start = True  # Stop the game running immediately
-        self.grid = None
 
     def handle_events(self, events):
         # If it is game_over or the first game, wait for an event before starting
@@ -113,13 +114,11 @@ class Game(object):
                 self.food.reset(self.snake)
                 self.score += 1
 
-
-
     def update_display(self):
-        self.grid = np.zeros([8, 8, 3], dtype=int)
-        np.place(self.grid, [0, 0, 0], DARK_BLUE)
+        grid = np.empty([8, 8, 3], dtype=int)
+        grid[:, :, :] = DARK_RED
         if self.food and self.snake:
-            self.grid[self.food.pos[0], self.food.pos[1]] = self.food.colour
+            grid[self.food.pos[0], self.food.pos[1]] = self.food.colour
             for segmant in self.snake.body_list:
-                self.grid[segmant[0], segmant[1]] = GREEN
-        return self.grid
+                grid[segmant[0], segmant[1]] = GREEN
+        return grid
