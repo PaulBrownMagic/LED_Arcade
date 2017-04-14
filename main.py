@@ -3,7 +3,7 @@ import animations
 from displays.sensehat_display import SenseHatDisplay
 from inputs.sensehat_input import SenseHatInput
 import numpy as np
-from games import snake
+from games import purple_rain
 import time
 
 
@@ -19,7 +19,7 @@ class Arcade:
     def __init__(self):
         self.display = SenseHatDisplay()
         self.controller = SenseHatInput()
-        self.game = snake.Game()
+        self.game = purple_rain.Game()
         self.state = "Welcome"
 
         animations.welcome(self.display)

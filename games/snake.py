@@ -1,38 +1,17 @@
-from games.constants import SNAKE_COLOURS
-from games.constants import WHITE, GREEN, DARK_RED
+from games.constants import WHITE, GREEN, DARK_RED, SNAKE_COLOURS
+from games.constants import HORIZONTAL, VERTICAL
+from games import Sprite
 import numpy as np
 import random
 
 
-class Snake():
+class Snake(Sprite):
     """The player character, a snake that runs around eating food"""
 
-    # Movement look-up values
-    movements = {"up": (-1, 0),
-                 "down": (1, 0),
-                 "left": (0, -1),
-                 "right": (0, 1)}
-    horizontal = ["left", "right"]
-    vertical = ["up", "down"]
-
     def __init__(self):
+        super().__init__(movement_axis=[HORIZONTAL, VERTICAL], no_double_back=True)
         self.body_list = [[2,1],[2,2]]  # starting location
         self.change = [1, 0]  # For x and y
-        self.last_direction = None  # Used to prevent the snake turning 180
-
-    def move(self, direction):
-        """Update change_x and change_y values based on direction"""
-        # Don't allow the snake to turn back on itself (180)
-        if direction in self.horizontal and self.last_direction in self.horizontal:
-            pass
-        elif direction in self.vertical and self.last_direction in self.vertical:
-            pass
-        else:
-            self.last_direction = direction
-            try:
-                self.change = self.movements[direction]
-            except KeyError:  # Unknown input, doesn't matter what
-                pass
 
     def update(self, food):
         """Actually move the snake, eat food, grow or not"""
@@ -79,7 +58,7 @@ class Food():
         self.colour = random.choice(SNAKE_COLOURS)
 
 
-class Game(object):
+class Game:
     fps = 0.1
 
     def __init__(self):

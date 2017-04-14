@@ -21,6 +21,6 @@ class Display:
         for frame in self.writer.generate_frames():
             grid = np.dstack([frame * text_color[0], frame * text_color[1], frame * text_color[2]])
             if background_color != [0, 0, 0]:
-                np.place(grid, grid==[0, 0, 0], background_color)
+                np.place(grid, grid==[0, 0, 0], background_color)  # Requires numpy>=1.12.1 to work
             self.update(grid)
             time.sleep(scroll_speed)
