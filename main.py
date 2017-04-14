@@ -39,6 +39,10 @@ class Arcade:
 
     def update_display(self):
         """show the grid on self.display"""
+        if self.game.game_over:
+            animations.game_over(self.display)
+            self.game.game_over = False
+            self.game.start = True
         if self.state == "Exit":
             self.display.update(self.grid)
         else:
