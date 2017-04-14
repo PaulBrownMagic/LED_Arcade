@@ -16,7 +16,7 @@ class Snake():
 
     def __init__(self):
         self.body_list = [[2,1],[2,2]]  # starting location
-        self.change = [1, 0]
+        self.change = [1, 0]  # For x and y
         self.last_direction = None  # Used to prevent the snake turning 180
 
     def move(self, direction):
@@ -88,21 +88,25 @@ class Game(object):
         self.start = True  # Stop the game running immediately
         self.grid = None
 
-    def run_logic(self, events):
+    def handle_events(self, events):
         # If it is game_over or the first game, wait for an event before starting
-        if self.game_over or self.start:
-            if len(events) > 0:
-                self.snake = Snake()
-                self.food = Food(self.snake)
-                self.start = False
-                self.game_over = False
-        # If the game is in progress, update!
+        if (self.game_over or self.start) and len(events) > 0:
+            self.snake = Snake()
+            self.food = Food(self.snake)
+            self.start = False
+            self.game_over = False
+        if self.snake:
+            # All events processed, last valid action taken
+            for event in events:
+                self.snake.move(event)
+
+    def run_logic(self):
+        # Check for game over first       
         if not self.start:
             self.game_over = self.snake.game_over()
-        if not self.game_over and not self.start:    
+        # If the game is in progress, update!
+        if not self.game_over and not self.start:
             # Update snake
-            for event in events:
-                self.snake.move(event)  # All events processed, last valid action taken
             self.snake.update(self.food)
             # See if the snake has eaten the food
             if self.snake.body_list[0] == self.food.pos:

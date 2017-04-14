@@ -22,3 +22,5 @@ for the next jobs that need doing. Some of these are pretty easy!
 - [ ] Design menu system, perhaps colour coded or icons. Words will be  annoying
 - [ ] Make a score display animation, e.g.: "Score: 12  12  12" in animations.py
 - [ ] Implement a proper FPS (frames per second) system, better than time.sleep()!
+- [ ] Move waiting for an input to start game over to an animation and out of the Game class.
+- [ ] Pick a harder to input exit method, maybe a double click?

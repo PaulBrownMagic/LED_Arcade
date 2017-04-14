@@ -32,10 +32,11 @@ class Arcade:
         for event in self.events:
             if event == "middle":
                 self.state = "Exit"
+        self.game.handle_events(self.events)
 
     def run_logic(self):
         """Call state's run_logic and handle state change"""
-        self.game.run_logic(self.events)
+        self.game.run_logic()
 
     def update_display(self):
         """show the grid on self.display"""
