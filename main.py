@@ -3,7 +3,7 @@ import animations
 import displays
 import inputs
 import numpy as np
-import snake
+from games import snake
 import time
 
 
@@ -17,12 +17,11 @@ class Arcade:
     """
 
     def __init__(self):
-        self.grid = np.zeros([8,8,3], dtype=int)
         self.display = displays.SenseHatDisplay()
-        self.state = "Welcome"
         self.controller = inputs.SenseHatInput()
-        self.events = []
         self.game = snake.Game()
+        self.state = "Welcome"
+        self.events = None
 
         animations.welcome(self.display)
 
@@ -45,7 +44,7 @@ class Arcade:
             self.game.game_over = False
             self.game.start = True
         if self.state == "Exit":
-            self.display.update(self.grid)
+            self.display.clear()
         else:
             self.display.update(self.game.update_display())
 

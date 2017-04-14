@@ -1,5 +1,5 @@
-from constants import COLOURS
-from constants import WHITE
+from constants import SNAKE_COLOURS
+from constants import WHITE, GREEN, DARK_BLUE
 import numpy as np
 import random
 
@@ -75,7 +75,7 @@ class Food():
             if self.pos not in snake.body_list:
                 inside = False
         #give food a random colour from list of colours. List ensures visible strong colours
-        self.colour = random.choice(COLOURS)
+        self.colour = random.choice(SNAKE_COLOURS)
 
 #game class
 class Game(object):
@@ -101,7 +101,7 @@ class Game(object):
                 self.snake.move(event)
 
     def run_logic(self):
-        # Check for game over first       
+        # Check for game over first
         if not self.start:
             self.game_over = self.snake.game_over()
         # If the game is in progress, update!
@@ -117,8 +117,9 @@ class Game(object):
 
     def update_display(self):
         self.grid = np.zeros([8, 8, 3], dtype=int)
+        np.place(self.grid, [0, 0, 0], DARK_BLUE)
         if self.food and self.snake:
             self.grid[self.food.pos[0], self.food.pos[1]] = self.food.colour
             for segmant in self.snake.body_list:
-                self.grid[segmant[0], segmant[1]] = WHITE
+                self.grid[segmant[0], segmant[1]] = GREEN
         return self.grid
