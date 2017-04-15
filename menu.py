@@ -23,5 +23,5 @@ class Menu:
         pass
 
     @staticmethod
-    def update)display():
+    def update_display():
         return NAV_SCREENS[GAMES[Menu.current]]
