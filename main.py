@@ -2,6 +2,7 @@
 import animations
 from displays.sensehat_display import SenseHatDisplay
 from inputs.sensehat_input import SenseHatInput
+from menu import Menu
 import numpy as np
 from games import purple_rain
 import time
@@ -19,7 +20,7 @@ class Arcade:
     def __init__(self):
         self.display = SenseHatDisplay()
         self.controller = SenseHatInput()
-        self.game = purple_rain.Game()
+        self.game = Menu()
         self.state = "Welcome"
 
         animations.welcome(self.display)
@@ -28,7 +29,7 @@ class Arcade:
         """Get input from controller, pass to state"""
         events = self.controller.get_events()
         for event in events:
-            if event == "middle":
+            if event == "up":
                 self.state = "Exit"
         self.game.handle_events(events)
 
