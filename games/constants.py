@@ -1,3 +1,5 @@
+GAMES = ["Snake", "Purple Rain"]
+
 # colours       r    g    b
 BLACK =      (   0,   0,   0)
 WHITE =      ( 255, 255, 255)
