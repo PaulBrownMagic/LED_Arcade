@@ -15,7 +15,7 @@ NAV_SCREENS = {
                    [w, m, m, m, m, m, m, w],
                    [m, w, m, m, m, m, w, m],
                    [m, m, g, g, g, g, m, m],
-                   [m, m, g, m, m, m, r, m],
+                   [m, m, g, m, m, m, b, m],
                    [m, m, g, g, g, g, m, m],
                    [m, m, m, m, m, g, m, m],
                    [m, m, g, g, g, g, m, m]]),

@@ -6,6 +6,7 @@ class Menu:
     number_of_games = len(GAMES) - 1
     game_over = False
     start = False
+    fps = 0.1
 
     def handle_events(self, events):
         for event in events:
