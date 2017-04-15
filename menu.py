@@ -4,6 +4,8 @@ from constants import NAV_SCREENS
 class Menu:
     current = 0
     number_of_games = len(GAMES) - 1
+    game_over = False
+    start = False
 
     def handle_events(self, events):
         for event in events:
