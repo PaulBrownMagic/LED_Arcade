@@ -30,3 +30,4 @@ for the next jobs that need doing. Some of these are pretty easy!
 - [ ] Lots of games!
 - [ ] High Score view (press up/down in menu?)
 - [ ] Test with unicorn hat again, cry about the inevitable rotation/direction issues...
+- [ ] Add Wii-Mote input, GamePad input, Keyboard input

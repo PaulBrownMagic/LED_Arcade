@@ -31,14 +31,14 @@ NAV_SCREENS = {
                          [n, n, n, n, n, n, n, p],
                          [p, n, n, n, g, n, n, n]
                          ]),
-"Pacman": np.array([ [ o, w, o, r, p, o, w, o],
-                     [ w, b, o, b, b, o, b, w],
-                     [ o, w, o, o, o, o, w, o],
+"Pacman": np.array([ [ k, w, k, k, p, k, w, k],
+                     [ w, k, k, b, b, k, k, w],
+                     [ k, w, k, o, r, k, w, k],
                      [ o, b, o, b, b, o, b, o],
-                     [ o, o, o, y, k, o, o, o],
-                     [ o, b, o, b, b, o, b, o],
-                     [ o, b, o, o, o, o, b, o],
-                     [ o, o, o, b, b, o, o, o] ])
+                     [ o, o, o, k, k, k, k, k],
+                     [ o, b, o, b, b, o, b, k],
+                     [ o, b, o, o, o, y, b, k],
+                     [ o, o, o, b, b, k, k, k] ])
 }
 EXIT_SCREEN = {
 "Exit": np.array([[r, w, k, k, k, k, w, k],
