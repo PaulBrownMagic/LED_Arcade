@@ -199,6 +199,6 @@ class Game(object):
             time.sleep(1)
 
     def update_display(self):
-        grid = self.maze.grid
+        grid = self.maze.grid.copy()
         grid[self.pacman.position[0], self.pacman.position[1]] = YELLOW
         return grid
