@@ -49,13 +49,13 @@ class Pacman(Sprite):
 
 
 class Ghost(Sprite):
-    ai_left = None
-    ai_right = None
-    ai_forward = None
+    count = 0
 
-    def __init__(self,colour,target_offset,start_offset):
+    def __init__(self, colour, target_offset):
         super().__init__([HORIZONTAL, VERTICAL], no_double_back=True)
-        self.position = [3+start_offset,0]
+        self.position = [3+Ghost.count,0]
+        self.last_direction = "down"
+        Ghost.count += 1
         self.change = choice([[1, 0], [-1, 0]])
         self.mode = 'chase'
         self.target_offset = target_offset
@@ -87,27 +87,26 @@ class Ghost(Sprite):
                       pacman.position[1] + target_change[1]]
         return target
 
-
-    def update(self,pacman,grid):
+    def update(self, pacman, grid):
         # Positions of AI measurements
-        ai_up = [self.position[0],
-                 self.position[1] - 1]
-        ai_down = [self.position[0],
-                   self.position[1] + 1]
-        ai_left = [self.position[0] - 1,
-                 self.position[1]]
-        ai_right = [self.position[0] + 1,
-                   self.position[1]]
+        ai_directions = {"up":  [self.position[0],
+                                 self.position[1] - 1],
+                         "down": [self.position[0],
+                                  self.position[1] + 1],
+                         "left": [self.position[0] - 1,
+                                  self.position[1]],
+                         "right": [self.position[0] + 1,
+                                   self.position[1]]
+                        }
         #choose target
         target = self.get_target_position(pacman)
         # choose direction
-        distances = {
-        "left": self.get_distance(ai_left, target, grid),
-        "right": self.get_distance(ai_right, target, grid),
-        "up": self.get_distance(ai_up, target, grid),
-        "down": self.get_distance(ai_down, target, grid)
-        }
-        self.move(min(distances, key=distances.get))
+        distances = {direction: self.get_distance(ai, target, grid)
+                      for direction, ai in ai_directions.items()
+                      if direction != self.last_direction}
+        direction = min(distances, key=distances.get)
+        self.move(direction)
+        self.last_direction = direction
         # Calculate new position
         new_x = self.position[0] + self.change[0]
         new_y = self.position[1] + self.change[1]
@@ -130,8 +129,8 @@ class Game(object):
         self.score = 0
         self.maze = Maze()
         self.pacman = Pacman()
-        self.blinky = Ghost(RED, 0, 0)
-        self.inky = Ghost(PURPLE, 4, 1)
+        self.blinky = Ghost(RED, 0)
+        self.inky = Ghost(PURPLE, 4)
         self.game_over = False
         self.frame = 0
         time.sleep(1)
@@ -157,8 +156,8 @@ class Game(object):
         self.pacman.update(self.maze.grid)
         if all(self.maze.grid[self.pacman.position[0], self.pacman.position[1]] == ORANGE):
             self.score += 1
-        self.blinky.update(self.pacman,self.maze.grid)
-        self.inky.update(self.pacman,self.maze.grid)
+        self.blinky.update(self.pacman, self.maze.grid)
+        self.inky.update(self.pacman, self.maze.grid)
         #self.frame+=1
         #if self.frame == 50:
         #    self.blinky.mode = 'scatter'
