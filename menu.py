@@ -1,27 +1,31 @@
-from games.constants import GAMES
-from constants import NAV_SCREENS
+from constants import NAV_SCREENS, EXIT_SCREEN
 
 class Menu:
-    current = 0
-    number_of_games = len(GAMES) - 1
     fps = 0.1
-    selected = None
+
+    def __init__(self):
+        self.current = 0
+        self.screens = NAV_SCREENS
+        self.screens.update(EXIT_SCREEN) # Can remove quit option
+        self.screen_names = list(self.screens.keys())
+        self.number_of_screens = len(self.screens) - 1
+        self.selected = None
 
     def handle_events(self, events):
         for event in events:
             if event == "left":
-                Menu.current -= 1
+                self.current -= 1
             elif event == "right":
-                Menu.current += 1
+                self.current += 1
             elif event == "middle":
-                self.selected = GAMES[Menu.current]
+                self.selected = self.screen_names[self.current]
         # Boundary check
-        Menu.current = 0 if Menu.current > Menu.number_of_games else Menu.current
-        Menu.current = Menu.number_of_games if Menu.current < 0 else Menu.current
+        self.current = 0 if self.current > self.number_of_screens else self.current
+        self.current = self.number_of_screens if self.current < 0 else self.current
 
     def run_logic(self):
         pass
 
     @staticmethod
     def update_display():
-        return NAV_SCREENS[GAMES[Menu.current]]
+        return self.screens[self.screen_names[self.current]]

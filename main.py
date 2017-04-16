@@ -74,15 +74,21 @@ class Arcade:
             self.game = snake.Game()
         elif self.menu.selected == "Purple Rain":
             self.game = purple_rain.Game()
+        elif self.menu.selected == "Exit":
+            self.state = "Exit"
+            return
         # Load new game into view
         self.menu.selected = None
         self.view = self.game
 
     # Show the menu, play a game. Rinse and repeat.
     def program_loop(self):
+        # Ordered to allow for clean exiting from menu
+        self.menu_loop()
         while not self.state == "Exit":
-            self.menu_loop()
             self.game_loop()
+            self.menu_loop()
+        print("Goodbye!")
 
 
 if __name__ == "__main__":
