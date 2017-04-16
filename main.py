@@ -4,7 +4,6 @@ from clock import Clock
 from displays.sensehat_display import SenseHatDisplay
 from inputs.sensehat_input import SenseHatInput
 from menu import Menu
-import numpy as np
 from games import purple_rain, snake, pacman
 
 
@@ -31,9 +30,6 @@ class Arcade:
     def get_input(self):
         """Get input from controller, pass to view"""
         events = self.controller.get_events()
-        #for event in events:
-        #    if event == "middle":
-        #        self.state = "Exit"
         self.view.handle_events(events)
 
     def run_logic(self):

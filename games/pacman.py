@@ -76,10 +76,10 @@ class Ghost(Sprite):
         self.change = choice([[1, 0], [-1, 0]])
 
     def get_distance(self, ai, target, grid):
-        """Calculate euclidean distance squared"""
+        """Calculate euclidean distance squared, no need to sqrt it for this"""
         # Off the edge of the display
         if -1 in ai or 8 in ai:
-            return 255        
+            return 255
         # Check it's not blue, if it is then direction is invalid
         if not all(grid[ai[1], ai[0]] == BLUE):
             x_len = ai[0] - target[0]

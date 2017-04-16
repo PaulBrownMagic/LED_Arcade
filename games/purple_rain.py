@@ -4,7 +4,6 @@ from games.constants import GREEN, YELLOW, RED, PURPLE, DARK_BLUE
 from games import Sprite
 import numpy as np
 import random
-import time
 
 
 class Player(Sprite):
@@ -30,7 +29,8 @@ class Player(Sprite):
 
 
 class Rain():
-
+    """ Purple pixels that fall from the sky"""
+    
     def __init__(self):
         self.position = [random.randint(0,7), random.randint(-20,-1)]
         self.change = 0.5  # y-axis

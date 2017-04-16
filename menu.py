@@ -1,6 +1,8 @@
 from constants import NAV_SCREENS, EXIT_SCREEN
 
+
 class Menu:
+    """Navigation/ Menu system for choosing a game"""
     fps = 0.1
 
     def __init__(self):
