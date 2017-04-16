@@ -54,7 +54,7 @@ class Ghost(Sprite):
     ai_forward = None
 
     def __init__(self,colour,target_offset,start_offset):
-        super().__init__([HORIZONTAL, VERTICAL])
+        super().__init__([HORIZONTAL, VERTICAL], no_double_back=True)
         self.position = [3+start_offset,0]
         self.change = choice([[1, 0], [-1, 0]])
         self.mode = 'chase'
@@ -71,10 +71,10 @@ class Ghost(Sprite):
                 x_len = ai[0]-target[0]
                 y_len = ai[1]-target[1]
                 return x_len**2 + y_len**2
+            else:
+                return 255
         except IndexError:
-            pass  # ai is off the grid so we'll return 200
-        return 200
-
+            return 255  # ai is off the grid so we'll return a Big int
 
     def get_target_position(self, pacman):
         target = [2 + self.target_offset, 2]  # Go to two top corners, not chase
@@ -122,7 +122,7 @@ class Ghost(Sprite):
 
 
 class Game(object):
-    fps = 1/5
+    fps = 1/3
 
     def __init__(self):
         self.lives = 3

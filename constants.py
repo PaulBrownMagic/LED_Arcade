@@ -31,7 +31,7 @@ NAV_SCREENS = {
                          [n, n, n, n, n, n, n, p],
                          [p, n, n, n, g, n, n, n]
                          ]),
-"Pacman": np.array([ [ o, w, o, r, k, o, w, o],
+"Pacman": np.array([ [ o, w, o, r, p, o, w, o],
                      [ w, b, o, b, b, o, b, w],
                      [ o, w, o, o, o, o, w, o],
                      [ o, b, o, b, b, o, b, o],
