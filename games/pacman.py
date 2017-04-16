@@ -59,6 +59,7 @@ class Ghost(Sprite):
         # Ghosts don't double back, but logic implemented in update because AI
         super().__init__([HORIZONTAL, VERTICAL], no_double_back=True)
         self.position = [3 + Ghost.count, 0]
+        self.number = Ghost.count
         Ghost.count += 1
         self.change = choice([[1, 0], [-1, 0]])
         self.opposite_direction = "up"
@@ -68,7 +69,7 @@ class Ghost(Sprite):
 
     def reset(self):
         """Move back to start position"""
-        self.position = [3 + self.count, 0]
+        self.position = [3 + self.number, 0]
         self.change = choice([[1, 0], [-1, 0]])
 
     def get_distance(self, ai, target, grid):
@@ -121,6 +122,7 @@ class Ghost(Sprite):
             self.opposite_direction = HORIZONTAL[1 - HORIZONTAL.index(direction)]
         elif direction in VERTICAL:
             self.opposite_direction = VERTICAL[1 - VERTICAL.index(direction)]
+        print(self.number, distances, direction, self.opposite_direction)
         # Calculate new position
         new_x = self.position[0] + self.change[0]
         new_y = self.position[1] + self.change[1]
