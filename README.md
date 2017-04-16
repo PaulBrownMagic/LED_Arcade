@@ -23,6 +23,7 @@ for the next jobs that need doing. Some of these are pretty easy!
 - [ ] Make a score display animation, e.g.: "Score: 12" in animations.py
 - [x] Implement a FPS (frames per second) system, better than time.sleep()!
 - [x] Pick a harder to input exit method: moved to menu.
+- [ ] Template game with explanation.
 
 \<One day...\>:
 - [ ] Move menu screen to game class?
