@@ -57,7 +57,7 @@ class Arcade:
     # Specific loops for game and menu
     def game_loop(self):
         """Run the program until exit state is called"""
-        while self.game and not self.game.game_over:
+        while not self.game.game_over:
             self.frame()
         # Game Over, play animation
         animations.game_over(self.display)
@@ -69,13 +69,13 @@ class Arcade:
         """Run the program until exit state is called"""
         while not self.menu.selected:
             self.frame()
-        print(self.menu.selected)
         # Select chosen game
         if self.menu.selected == "Snake":
             self.game = snake.Game()
         elif self.menu.selected == "Purple Rain":
             self.game = purple_rain.Game()
         # Load new game into view
+        self.menu.selected = None
         self.view = self.game
 
     # Show the menu, play a game. Rinse and repeat.
@@ -87,4 +87,4 @@ class Arcade:
 
 if __name__ == "__main__":
     arcade = Arcade()
-    arcade.game_loop()
+    arcade.program_loop()
