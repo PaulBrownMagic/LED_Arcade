@@ -10,7 +10,7 @@ class Maze():
 
     def __init__(self):
         self.maze_number = 0
-        self.grid = mazes.MAZES[self.maze_number]
+        self.grid = mazes.MAZES[self.maze_number].copy()
         self.number_of_mazes = len(mazes.MAZES) - 1
 
     def update(self, pacman):
@@ -20,7 +20,7 @@ class Maze():
     def next_level(self):
         self.maze_number += 1
         self.maze_number = 0 if self.maze_number > self.number_of_mazes else self.maze_number
-        self.grid = mazes.MAZES[self.maze_number]
+        self.grid = mazes.MAZES[self.maze_number].copy()
 
 class Pacman(Sprite):
     """Pacman the player"""
@@ -47,102 +47,75 @@ class Pacman(Sprite):
         if not all(grid[new_y, new_x] == BLUE):
             self.position = [new_x, new_y]
 
-"""
-class Ghost():
-    #attributes
-    direction = None
-    position = None
+
+class Ghost(Sprite):
     ai_left = None
     ai_right = None
     ai_forward = None
-    mode = None
-    target = None
-    colour = None
-    #Methods
+
     def __init__(self,colour,target_offset,start_offset):
         self.position = [3+start_offset,0]
-        self.direction = choice(['r','l'])
+        self.change = choice([[1, 0], [-1, 0]])
         self.mode = 'chase'
         self.target_offset = target_offset
         self.colour = colour
+
     def reset(self,offset):
         self.position = [3+offset,0]
-        self.direction = choice(['r','l'])
-    def update(self,pacman,grid):
-        move = self.direction
-        #move
-        if move == 'r' and self.position[0]<7:
-            self.position[0]+=1
-            self.ai_left = [self.position[0],self.position[1]-1]
-            self.ai_right = [self.position[0],self.position[1]+1]
-            self.ai_forward = [self.position[0]+1,self.position[1]]
-        elif move == 'l' and self.position[0]>0:
-            self.position[0]-=1
-            self.ai_left = [self.position[0],self.position[1]+1]
-            self.ai_right = [self.position[0],self.position[1]-1]
-            self.ai_forward = [self.position[0]-1,self.position[1]]
-        elif move == 'u'and self.position[1]>0:
-            self.position[1]-=1
-            self.ai_left = [self.position[0]-1,self.position[1]]
-            self.ai_right = [self.position[0]+1,self.position[1]]
-            self.ai_forward = [self.position[0],self.position[1]-1]
-        elif move == 'd' and self.position[1]<7:
-            self.position[1]+=1
-            self.ai_left = [self.position[0]+1,self.position[1]]
-            self.ai_right = [self.position[0]-1,self.position[1]]
-            self.ai_forward = [self.position[0],self.position[1]+1]
-        unicorn.set_pixel(self.position[0],self.position[1],self.colour[0],self.colour[1],self.colour[2])
-        #choose target
-        target = [2 + self.target_offset, 2]
-        if self.mode == 'chase':
-            if pacman.direction == 'r':
-                target = [pacman.position[0]+self.target_offset,pacman.position[1]]
-            elif pacman.direction == 'l':
-                target = [pacman.position[0]-self.target_offset,pacman.position[1]]
-            elif pacman.direction == 'u':
-                target = [pacman.position[0],pacman.position[1]-self.target_offset]
-            elif pacman.direction == 'd':
-                target = [pacman.position[0],pacman.position[1]+self.target_offset]
-        #choose direction
-        l_dist = 200
-        r_dist = 200
-        f_dist = 200
-        try:
-            if grid[self.ai_left[1]][self.ai_left[0]] != 'b':
-                x_len = self.ai_left[0]-target[0]
-                y_len = self.ai_left[1]-target[1]
-                l_dist =  x_len**2 + y_len**2
-        except:
-            pass
-        try:
-            if grid[self.ai_right[1]][self.ai_right[0]] != 'b':
-                x_len = self.ai_right[0]-target[0]
-                y_len = self.ai_right[1]-target[1]
-                r_dist =  x_len**2 + y_len**2
-        except:
-            pass
-        try:
-            if grid[self.ai_forward[1]][self.ai_forward[0]] != 'b':
-                x_len = self.ai_forward[0]-target[0]
-                y_len = self.ai_forward[1]-target[1]
-                f_dist =  x_len**2 + y_len**2
-        except:
-            pass
-        shortest = min(l_dist,r_dist,f_dist)
-        directions = ['u','r','d','l']
-        if shortest == l_dist:
-            if self.direction == directions[0]:
-                self.direction = directions[3]
-            else:
-                self.direction = directions[directions.index(self.direction)-1]
-        elif shortest == r_dist:
-            if self.direction == directions[3]:
-                self.direction = directions[0]
-            else:
-                self.direction = directions[directions.index(self.direction)+1]
+        self.change = choice([[1, 0], [-1, 0]])
+
+    def get_distance(self, ai, target, grid):
+        if grid[ai[1], ai[0]] != BLUE:
+            x_ = ai[0]-target[0]
+            y_len = ai[1]-target[1]
+            return x_len**2 + y_len**2
         else:
-            self.direction = move
-"""
+            return 200
+
+    def get_target_position(self, pacman):
+        target = [2 + self.target_offset, 2]  # Go to two top corners, not chase
+        if self.mode == 'chase':
+            # How far the target is from pacman with direction
+            target_change = [pacman.change[0] * self.target_offset,
+                             pacman.change[1] * self.target_offset]
+            # Convert to co-ordinates
+            target = [pacman.position[0] + target_change[0],
+                      pacman.position[1] + target_change[1]]
+        return target
+
+
+    def update(self,pacman,grid):
+        # Positions of AI measurements
+        ai_up = [self.position[0],
+                 self.position[1] - 1]
+        ai_down = [self.position[0],
+                   self.position[1] + 1]
+        ai_left = [self.position[0] - 1,
+                 self.position[1]]
+        ai_right = [self.position[0] + 1,
+                   self.position[1]]
+        #choose target
+        target = self.get_target_position(pacman)
+        # choose direction
+        distances = {
+        "left": self.get_distance(ai_left, target, grid),
+        "right": self.get_distance(ai_right, target, grid),
+        "up": self.get_distance(ai_up, target, grid),
+        "down": self.get_distance(ai_down, target, grid)
+        }
+        self.move(min(distances, key=distances.get))
+        # Calculate new position
+        new_x = self.position[0] + self.change[0]
+        new_y = self.position[1] + self.change[1]
+        # Boundary check
+        new_x = 7 if new_x > 7 else new_x
+        new_x = 0 if new_x < 0 else new_x
+        new_y = 7 if new_y > 7 else new_y
+        new_y = 0 if new_y < 0 else new_y
+        # Grid check
+        if not all(grid[new_y, new_x] == BLUE):
+            self.position = [new_x, new_y]
+
 
 class Game(object):
     fps = 1/5
@@ -153,8 +126,8 @@ class Game(object):
         self.score = 0
         self.maze = Maze()
         self.pacman = Pacman()
-        #self.blinky = Ghost(RED,0,0)
-        #self.inky = Ghost(PURPLE,4,1)
+        self.blinky = Ghost(RED, 0, 0)
+        self.inky = Ghost(PURPLE, 4, 1)
         self.game_over = False
         self.frame = 0
         time.sleep(1)
@@ -169,19 +142,19 @@ class Game(object):
             self.game_over = True
         #only if it is not the first game and not game over update the food and snake
         self.maze.update(self.pacman.position)
-        """
-            if self.pacman.position == self.blinky.position or self.pacman.position == self.inky.position:
-                self.lives -= 1
-                self.pacman.reset()
-                self.blinky.reset(0)
-                self.inky.reset(1)
-                time.sleep(1)
-        """
+
+        if self.pacman.position == self.blinky.position or self.pacman.position == self.inky.position:
+            self.lives -= 1
+            self.pacman.reset()
+            self.blinky.reset(0)
+            self.inky.reset(1)
+            time.sleep(1)
+
         self.pacman.update(self.maze.grid)
         if all(self.maze.grid[self.pacman.position[0], self.pacman.position[1]] == ORANGE):
             self.score += 1
-        #self.blinky.update(self.pacman,self.maze.grid)
-        #self.inky.update(self.pacman,self.maze.grid)
+        self.blinky.update(self.pacman,self.maze.grid)
+        self.inky.update(self.pacman,self.maze.grid)
         #self.frame+=1
         #if self.frame == 50:
         #    self.blinky.mode = 'scatter'
@@ -194,8 +167,8 @@ class Game(object):
             self.lives+=1
             self.maze.next_level()
             self.pacman.reset()
-            #self.blinky.reset(0)
-            #self.inky.reset(1)
+            self.blinky.reset(0)
+            self.inky.reset(1)
             time.sleep(1)
 
     def update_display(self):

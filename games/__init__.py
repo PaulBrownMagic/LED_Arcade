@@ -38,5 +38,6 @@ class Sprite:
         # 2-axis movement
         if self.valid_axis == 2:
             self.change = change
+        # 1-axis movement
         elif self.valid_axis == 1:
             self.change = sum(change)
