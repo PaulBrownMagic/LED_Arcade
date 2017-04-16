@@ -26,6 +26,5 @@ class Menu:
     def run_logic(self):
         pass
 
-    @staticmethod
-    def update_display():
+    def update_display(self):
         return self.screens[self.screen_names[self.current]]
