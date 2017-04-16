@@ -42,10 +42,7 @@ class Arcade:
 
     def update_display(self):
         """Show the view on self.display"""
-        if self.state == "Exit":
-            self.display.clear()
-        else:
-            self.display.update(self.view.update_display())
+        self.display.update(self.view.update_display())
 
     def frame(self):
         """Make a frame and display it"""
@@ -94,3 +91,4 @@ class Arcade:
 if __name__ == "__main__":
     arcade = Arcade()
     arcade.program_loop()
+    arcade.display.clear()
