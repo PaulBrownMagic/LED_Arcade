@@ -165,14 +165,21 @@ class Game(object):
         if self.lives == 0:
             self.game_over = True
 
-        # update pacman
-        self.pacman.update(self.maze.grid)
+        # check if pacman has been caught
+        if self.pacman.position == self.blinky.position or self.pacman.position == self.inky.position:
+            self.lives -= 1
+            self.reset_sprites()
+            time.sleep(1)
+
         # see if pacman is eating an orange
         if all(self.maze.grid[self.pacman.position[0], self.pacman.position[1]] == ORANGE):
             self.score += 1
 
         # update maze
         self.maze.update(self.pacman.position)
+
+        # update pacman
+        self.pacman.update(self.maze.grid)
 
         # update ghosts
         self.blinky.update(self.pacman, self.maze.grid)
@@ -186,12 +193,6 @@ class Game(object):
             self.blinky.mode = 'chase'
             self.inky.mode = 'chase'
             self.frame = 0
-
-        # check if pacman has been caught
-        if self.pacman.position == self.blinky.position or self.pacman.position == self.inky.position:
-            self.lives -= 1
-            self.reset_sprites()
-            time.sleep(1)
 
         # check if the maze is finished
         if ORANGE not in self.maze.grid:
