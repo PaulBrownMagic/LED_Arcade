@@ -5,7 +5,7 @@ from displays.sensehat_display import SenseHatDisplay
 from inputs.sensehat_input import SenseHatInput
 from menu import Menu
 import numpy as np
-from games import purple_rain, snake
+from games import purple_rain, snake, pacman
 
 
 class Arcade:
@@ -74,6 +74,8 @@ class Arcade:
             self.game = snake.Game()
         elif self.menu.selected == "Purple Rain":
             self.game = purple_rain.Game()
+        elif self.menu.selected == "Pacman":
+            self.game = pacman.Game()
         elif self.menu.selected == "Exit":
             self.state = "Exit"
             return

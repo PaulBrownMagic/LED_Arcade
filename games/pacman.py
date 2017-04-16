@@ -198,8 +198,6 @@ class Game(object):
             #self.inky.reset(1)
             time.sleep(1)
 
-
-
     def update_display(self):
         grid = self.maze.grid
         grid[self.pacman.position[0], self.pacman.position[1]] = YELLOW

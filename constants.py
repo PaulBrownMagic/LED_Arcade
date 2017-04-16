@@ -9,6 +9,8 @@ b = BLUE
 m = DARK_RED
 n = DARK_BLUE
 p = PURPLE
+o = ORANGE
+y = YELLOW
 
 NAV_SCREENS = {
 "Snake": np.array([[m, w, m, m, m, m, w, m],
@@ -29,6 +31,14 @@ NAV_SCREENS = {
                          [n, n, n, n, n, n, n, p],
                          [p, n, n, n, g, n, n, n]
                          ]),
+"Pacman": np.array([ [ o, w, o, k, k, o, w, o],
+                     [ w, b, o, r, b, o, b, w],
+                     [ o, w, o, o, o, o, w, o],
+                     [ o, b, o, b, b, o, b, o],
+                     [ o, o, o, y, k, o, o, o],
+                     [ o, b, o, b, b, o, b, o],
+                     [ o, b, o, o, o, o, b, o],
+                     [ o, o, o, b, b, o, o, o] ])
 }
 EXIT_SCREEN = {
 "Exit": np.array([[r, w, k, k, k, k, w, k],
