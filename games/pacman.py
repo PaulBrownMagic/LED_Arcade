@@ -71,10 +71,10 @@ class Ghost(Sprite):
                 x_len = ai[0]-target[0]
                 y_len = ai[1]-target[1]
                 return x_len**2 + y_len**2
+            else:
+                return 255
         except IndexError:
-            pass  # ai is off the grid so we'll return 200
-        return 200
-
+            return 255  # ai is off the grid so we'll return a Big int
 
     def get_target_position(self, pacman):
         target = [2 + self.target_offset, 2]  # Go to two top corners, not chase
