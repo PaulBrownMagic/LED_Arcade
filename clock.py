@@ -7,5 +7,5 @@ class Clock:
         self.start_time = time.perf_counter()
 
     def tick(self):
-        time.sleep(max(self.fps - (time.perf_counter() - self.start_time, 0)))
+        time.sleep(max(self.fps - (time.perf_counter() - self.start_time), 0))
         self.start_time = time.perf_counter()
