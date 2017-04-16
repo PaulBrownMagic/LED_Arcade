@@ -54,6 +54,8 @@ class Pacman(Sprite):
 class Ghost(Sprite):
     """Blinky and Inky with AI to chase Pacman"""
     count = 0
+    horizontal = ["left", "right"]
+    vertical = ["up", "down"]
 
     def __init__(self, colour, target_offset):
         # Ghosts don't double back, but logic implemented in update because AI
@@ -118,10 +120,10 @@ class Ghost(Sprite):
         direction = min(distances, key=distances.get)
         self.move(direction)
         # update opposite direction
-        if direction in HORIZONTAL:
-            self.opposite_direction = HORIZONTAL[1 - HORIZONTAL.index(direction)]
-        elif direction in VERTICAL:
-            self.opposite_direction = VERTICAL[1 - VERTICAL.index(direction)]
+        if direction in self.horizontal:
+            self.opposite_direction = self.horizontal[1 - self.horizontal.index(direction)]
+        elif direction in self.vertical:
+            self.opposite_direction = self.vertical[1 - self.vertical.index(direction)]
         print(self.number, distances, direction, self.opposite_direction)
         # Calculate new position
         new_x = self.position[0] + self.change[0]
