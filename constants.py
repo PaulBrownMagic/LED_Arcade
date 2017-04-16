@@ -31,9 +31,9 @@ NAV_SCREENS = {
                          ]),
 }
 EXIT_SCREEN = {
-"Exit": np.array([[r, k, k, k, k, k, k, k],
-                  [k, r, k, r, r, k, k, k],
-                  [k, k, r, k, k, r, k, k],
+"Exit": np.array([[r, w, k, k, k, k, w, k],
+                  [w, r, k, r, r, k, k, w],
+                  [k, w, r, k, k, r, w, k],
                   [k, r, k, r, k, k, r, k],
                   [k, r, k, k, r, k, r, k],
                   [k, k, r, k, k, r, k, k],

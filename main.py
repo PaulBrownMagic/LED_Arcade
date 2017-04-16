@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 import animations
+from clock import Clock
 from displays.sensehat_display import SenseHatDisplay
 from inputs.sensehat_input import SenseHatInput
 from menu import Menu
 import numpy as np
 from games import purple_rain, snake
-import time
 
 
 class Arcade:
@@ -24,7 +24,7 @@ class Arcade:
         self.view = self.menu  # What part of the program currently shown/run
         self.game = None
         self.state = "Welcome"
-
+        self.clock = Clock()
         animations.welcome(self.display)
 
     # Generic functions for all views
@@ -49,11 +49,12 @@ class Arcade:
         self.get_input()
         self.run_logic()
         self.update_display()
-        time.sleep(self.view.fps)
+        self.clock.tick()
 
     # Specific loops for game and menu
     def game_loop(self):
         """Run the program until exit state is called"""
+        self.clock.reset_clock(self.game.fps)
         while not self.game.game_over:
             self.frame()
         # Game Over, play animation
@@ -64,6 +65,7 @@ class Arcade:
 
     def menu_loop(self):
         """Run the program until exit state is called"""
+        self.clock.reset_clock(self.menu.fps)
         while not self.menu.selected:
             self.frame()
         # Select chosen game
