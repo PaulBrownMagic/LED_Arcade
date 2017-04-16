@@ -65,7 +65,7 @@ class Ghost(Sprite):
         self.change = choice([[1, 0], [-1, 0]])
 
     def get_distance(self, ai, target, grid):
-        if grid[ai[1], ai[0]] != BLUE:
+        if not all(grid[ai[1], ai[0]] == BLUE):
             x_ = ai[0]-target[0]
             y_len = ai[1]-target[1]
             return x_len**2 + y_len**2
