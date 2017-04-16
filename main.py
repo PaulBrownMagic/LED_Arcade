@@ -87,4 +87,4 @@ class Arcade:
 
 if __name__ == "__main__":
     arcade = Arcade()
-    arcade.game_loop()
+    arcade.program_loop()
