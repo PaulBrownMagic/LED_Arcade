@@ -39,10 +39,10 @@ class Pacman(Sprite):
         new_x = self.position[0] + self.change[0]
         new_y = self.position[1] + self.change[1]
         # Boundary check
-        new_x = 0 if new_x > 7 else new_x
-        new_x = 7 if new_x < 0 else new_x
-        new_y = 0 if new_y > 7 else new_y
-        new_y = 7 if new_y < 0 else new_y
+        new_x = 7 if new_x > 7 else new_x
+        new_x = 0 if new_x < 0 else new_x
+        new_y = 7 if new_y > 7 else new_y
+        new_y = 0 if new_y < 0 else new_y
         # Grid check
         if not all(grid[new_y, new_x] == BLUE):
             self.position = [new_x, new_y]
