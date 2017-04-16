@@ -54,7 +54,7 @@ class Ghost(Sprite):
     ai_forward = None
 
     def __init__(self,colour,target_offset,start_offset):
-        super().__init__([HORIZONTAL, VERTICAL])
+        super().__init__([HORIZONTAL, VERTICAL], no_double_back=True)
         self.position = [3+start_offset,0]
         self.change = choice([[1, 0], [-1, 0]])
         self.mode = 'chase'
@@ -122,7 +122,7 @@ class Ghost(Sprite):
 
 
 class Game(object):
-    fps = 1/5
+    fps = 1/3
 
     def __init__(self):
         self.lives = 3
