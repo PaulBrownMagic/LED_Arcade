@@ -62,36 +62,24 @@ class Game:
     fps = 0.1
 
     def __init__(self):
-        self.snake = None
-        self.food = None
+        self.snake = Snake()
+        self.food = Food(self.snake)
         self.game_over = False
         self.score = 0
-        self.start = True  # Stop the game running immediately
 
     def handle_events(self, events):
-        # If it is game_over or the first game, wait for an event before starting
-        if (self.game_over or self.start) and len(events) > 0:
-            self.snake = Snake()
-            self.food = Food(self.snake)
-            self.start = False
-            self.game_over = False
-        if self.snake:
-            # All events processed, last valid action taken
-            for event in events:
-                self.snake.move(event)
+        for event in events:
+            self.snake.move(event)
 
     def run_logic(self):
         # Check for game over first
-        if not self.start:
-            self.game_over = self.snake.game_over()
-        # If the game is in progress, update!
-        if not self.game_over and not self.start:
-            # Update snake
-            self.snake.update(self.food)
-            # See if the snake has eaten the food
-            if self.snake.body_list[0] == self.food.pos:
-                self.food.reset(self.snake)
-                self.score += 1
+        self.game_over = self.snake.game_over()
+        # Update snake
+        self.snake.update(self.food)
+        # See if the snake has eaten the food
+        if self.snake.body_list[0] == self.food.pos:
+            self.food.reset(self.snake)
+            self.score += 1
 
     def update_display(self):
         grid = np.empty([8, 8, 3], dtype=int)
