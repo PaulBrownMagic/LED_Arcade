@@ -55,38 +55,27 @@ class Game:
     fps = 0.05
 
     def __init__(self):
-        self.lives = 0
-        self.level = 0
-        self.start = True
-        self.player = None
+        self.lives = 3
+        self.player = Player()
         self.game_over = False
-        self.rain = None
+        self.rain = [Rain() for _ in range(20)]
 
     def handle_events(self, events):
-        # If it is game_over or the first game, wait for an event before starting
-        if (self.game_over or self.start) and len(events) > 0:
-            self.player = Player()
-            self.rain = [Rain() for _ in range(20)]
-            self.start = False
-            self.game_over = False
-            self.lives = 3
-        if self.player:
-            # All events processed, last valid action taken
-            for event in events:
-                self.player.move(event)
+        # All events processed, last valid action taken
+        for event in events:
+            self.player.move(event)
 
 
     def run_logic(self):
         #check for game over first
-        if self.lives <= 0 and not self.start:
+        if self.lives <= 0:
             self.game_over = True
-        #only if it is not the first game and not game over update the food and snake
-        if not self.game_over and not self.start:
-            self.player.update(self.lives)
-            for r in self.rain:
-                r.update(self.player.position)
-                if r.int_pos == self.player.position:
-                        self.lives -= 1
+        # Update sprites
+        self.player.update(self.lives)
+        for r in self.rain:
+            r.update(self.player.position)
+            if r.int_pos == self.player.position:
+                self.lives -= 1
 
     def update_display(self):
         grid = np.empty([8, 8, 3], dtype=int)
