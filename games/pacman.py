@@ -145,7 +145,7 @@ class Ghost():
 """
 
 class Game(object):
-    fps = 1/8
+    fps = 1/5
 
     def __init__(self):
         self.lives = 3
