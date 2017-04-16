@@ -4,8 +4,6 @@ from constants import NAV_SCREENS
 class Menu:
     current = 0
     number_of_games = len(GAMES) - 1
-    game_over = False
-    start = False
     fps = 0.1
     selected = None
 

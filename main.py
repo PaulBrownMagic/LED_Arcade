@@ -31,9 +31,9 @@ class Arcade:
     def get_input(self):
         """Get input from controller, pass to view"""
         events = self.controller.get_events()
-        for event in events:
-            if event == "middle":
-                self.state = "Exit"
+        #for event in events:
+        #    if event == "middle":
+        #        self.state = "Exit"
         self.view.handle_events(events)
 
     def run_logic(self):
@@ -41,20 +41,24 @@ class Arcade:
         self.view.run_logic()
 
     def update_display(self):
-        """show the view on self.display"""
+        """Show the view on self.display"""
         if self.state == "Exit":
             self.display.clear()
         else:
             self.display.update(self.view.update_display())
 
+    def frame(self):
+        """Make a frame and display it"""
+        self.get_input()
+        self.run_logic()
+        self.update_display()
+        time.sleep(self.view.fps)
+
     # Specific loops for game and menu
     def game_loop(self):
         """Run the program until exit state is called"""
         while not self.game.game_over:
-            self.get_input()
-            self.run_logic()
-            self.update_display()
-            time.sleep(self.game.fps)
+            self.frame()
         # Game Over, play animation
         animations.game_over(self.display)
         # Reset for menu and clear game
@@ -64,10 +68,8 @@ class Arcade:
     def menu_loop(self):
         """Run the program until exit state is called"""
         while not self.menu.selected:
-            self.get_input()
-            self.run_logic()
-            self.update_display()
-            time.sleep(self.menu.fps)
+            self.frame()
+        print(self.menu.selected)
         # Select chosen game
         if self.menu.selected == "Snake":
             self.game = snake.Game()
