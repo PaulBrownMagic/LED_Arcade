@@ -59,7 +59,7 @@ class Food():
 
 
 class Game:
-    fps = 0.1
+    fps = 1/8
 
     def __init__(self):
         self.snake = Snake()
