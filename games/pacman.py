@@ -7,7 +7,7 @@ import time
 
 
 class Maze():
-
+    """Load and display mazes for levels"""
     def __init__(self):
         self.maze_number = 0
         self.grid = mazes.MAZES[self.maze_number].copy()
@@ -19,8 +19,10 @@ class Maze():
 
     def next_level(self):
         self.maze_number += 1
+        # Cycle mazes
         self.maze_number = 0 if self.maze_number > self.number_of_mazes else self.maze_number
         self.grid = mazes.MAZES[self.maze_number].copy()
+
 
 class Pacman(Sprite):
     """Pacman the player"""
@@ -31,6 +33,7 @@ class Pacman(Sprite):
         self.position = [3,4]
 
     def reset(self):
+        """Go back to start position"""
         self.change = [0, 0]
         self.position = [3,4]
 
@@ -49,34 +52,41 @@ class Pacman(Sprite):
 
 
 class Ghost(Sprite):
+    """Blinky and Inky with AI to chase Pacman"""
     count = 0
 
     def __init__(self, colour, target_offset):
+        # Ghosts don't double back, but logic implemented in update because AI
         super().__init__([HORIZONTAL, VERTICAL], no_double_back=True)
-        self.position = [3+Ghost.count,0]
-        self.last_direction = "down"
+        self.position = [3 + Ghost.count, 0]
         Ghost.count += 1
         self.change = choice([[1, 0], [-1, 0]])
+        self.opposite_direction = "up"
         self.mode = 'chase'
         self.target_offset = target_offset
         self.colour = colour
 
-    def reset(self,offset):
-        self.position = [3+offset,0]
+    def reset(self):
+        """Move back to start position"""
+        self.position = [3 + self.count, 0]
         self.change = choice([[1, 0], [-1, 0]])
 
     def get_distance(self, ai, target, grid):
+        """Calculate euclidean distance squared"""
         try:
+            # Check it's not blue, if it is then direction is invalid
             if not all(grid[ai[1], ai[0]] == BLUE):
-                x_len = ai[0]-target[0]
-                y_len = ai[1]-target[1]
+                x_len = ai[0] - target[0]
+                y_len = ai[1] - target[1]
                 return x_len**2 + y_len**2
+            # Invalid direction, max distance is 98, so 255 can't be picked.
             else:
                 return 255
         except IndexError:
-            return 255  # ai is off the grid so we'll return a Big int
+            return 255  # ai is off the grid so return 255 so not picked.
 
     def get_target_position(self, pacman):
+        """Calculate where ghost is trying to get"""
         target = [2 + self.target_offset, 2]  # Go to two top corners, not chase
         if self.mode == 'chase':
             # How far the target is from pacman with direction
@@ -88,8 +98,8 @@ class Ghost(Sprite):
         return target
 
     def update(self, pacman, grid):
-        # Positions of AI measurements
-        ai_directions = {"up":  [self.position[0],
+        # Positions of AI measurement locations
+        ai_locations = {"up":  [self.position[0],
                                  self.position[1] - 1],
                          "down": [self.position[0],
                                   self.position[1] + 1],
@@ -102,11 +112,15 @@ class Ghost(Sprite):
         target = self.get_target_position(pacman)
         # choose direction
         distances = {direction: self.get_distance(ai, target, grid)
-                      for direction, ai in ai_directions.items()
-                      if direction != self.last_direction}
+                      for direction, ai in ai_locations.items()
+                      if direction != self.opposite_direction}
         direction = min(distances, key=distances.get)
         self.move(direction)
-        self.last_direction = direction
+        # update opposite direction
+        if direction in HORIZONTAL:
+            self.opposite_direction = HORIZONTAL[1 - HORIZONTAL.index(direction)]
+        elif direction in VERTICAL:
+            self.opposite_direction = VERTICAL[1 - VERTICAL.index(direction)]
         # Calculate new position
         new_x = self.position[0] + self.change[0]
         new_y = self.position[1] + self.change[1]
@@ -121,7 +135,7 @@ class Ghost(Sprite):
 
 
 class Game(object):
-    fps = 1/3
+    fps = 1/3  # Keep it slow!
 
     def __init__(self):
         self.lives = 3
@@ -135,48 +149,61 @@ class Game(object):
         self.frame = 0
         time.sleep(1)
 
+    def reset_sprites(self):
+        self.pacman.reset()
+        self.blinky.reset()
+        self.inky.reset()
+
     def handle_events(self, events):
         for event in events:
             self.pacman.move(event)
 
     def run_logic(self):
-        #check for game over first
+        # check for game over first
         if self.lives == 0:
             self.game_over = True
-        #only if it is not the first game and not game over update the food and snake
-        self.maze.update(self.pacman.position)
 
-        if self.pacman.position == self.blinky.position or self.pacman.position == self.inky.position:
-            self.lives -= 1
-            self.pacman.reset()
-            self.blinky.reset(0)
-            self.inky.reset(1)
-            time.sleep(1)
-
+        # update pacman
         self.pacman.update(self.maze.grid)
+        # see if pacman is eating an orange
         if all(self.maze.grid[self.pacman.position[0], self.pacman.position[1]] == ORANGE):
             self.score += 1
+
+        # update maze
+        self.maze.update(self.pacman.position)
+
+        # update ghosts
         self.blinky.update(self.pacman, self.maze.grid)
         self.inky.update(self.pacman, self.maze.grid)
-        #self.frame+=1
-        #if self.frame == 50:
-        #    self.blinky.mode = 'scatter'
-        #    self.inky.mode = 'scatter'
-        #if self.frame == 70:
-        #    self.blinky.mode = 'chase'
-        #    self.inky.mode = 'chase'
-        #    self.frame = 0
+        # update ghost mode
+        self.frame+=1
+        if self.frame == 50:
+            self.blinky.mode = 'scatter'
+            self.inky.mode = 'scatter'
+        if self.frame == 70:
+            self.blinky.mode = 'chase'
+            self.inky.mode = 'chase'
+            self.frame = 0
+
+        # check if pacman has been caught
+        if self.pacman.position == self.blinky.position or self.pacman.position == self.inky.position:
+            self.lives -= 1
+            self.reset_sprites()
+            time.sleep(1)
+
+        # check if the maze is finished
         if ORANGE not in self.maze.grid:
             self.lives+=1
             self.maze.next_level()
-            self.pacman.reset()
-            self.blinky.reset(0)
-            self.inky.reset(1)
+            self.reset_sprites()
             time.sleep(1)
 
     def update_display(self):
+        # Copy grid to not update original
         grid = self.maze.grid.copy()
+        # Put pacman on
         grid[self.pacman.position[1], self.pacman.position[0]] = YELLOW
+        # Put ghosts on
         grid[self.blinky.position[1], self.blinky.position[0]] = self.blinky.colour
         grid[self.inky.position[1], self.inky.position[0]] = self.inky.colour
         return grid
