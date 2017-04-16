@@ -62,6 +62,7 @@ class Ghost(Sprite):
         super().__init__([HORIZONTAL, VERTICAL], no_double_back=True)
         self.position = [3 + Ghost.count, 0]
         Ghost.count += 1
+        self.number = self.count
         self.change = choice([[1, 0], [-1, 0]])
         self.opposite_direction = "up"
         self.mode = 'chase'
@@ -70,7 +71,7 @@ class Ghost(Sprite):
 
     def reset(self):
         """Move back to start position"""
-        self.position = [3 + self.count, 0]
+        self.position = [3 + self.number, 0]
         self.change = choice([[1, 0], [-1, 0]])
 
     def get_distance(self, ai, target, grid):
