@@ -44,7 +44,7 @@ class Pacman(Sprite):
         new_y = 0 if new_y > 7 else new_y
         new_y = 7 if new_y < 0 else new_y
         # Grid check
-        if not all(grid[new_x, new_y] == BLUE):
+        if not all(grid[new_y, new_x] == BLUE):
             self.position = [new_x, new_y]
 
 """
@@ -200,5 +200,5 @@ class Game(object):
 
     def update_display(self):
         grid = self.maze.grid.copy()
-        grid[self.pacman.position[0], self.pacman.position[1]] = YELLOW
+        grid[self.pacman.position[1], self.pacman.position[0]] = YELLOW
         return grid

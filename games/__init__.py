@@ -2,11 +2,11 @@ from games.constants import HORIZONTAL, VERTICAL
 
 class Sprite:
 
-    vertical_movements = {"up": (-1, 0),
-                          "down": (1, 0),
+    vertical_movements = {"up": (0, -1),
+                          "down": (0, 1),
                           }
-    horizontal_movements = {"left": (0, -1),
-                            "right": (0, 1)}
+    horizontal_movements = {"left": (-1, 0),
+                            "right": (1, 0)}
     horizontal = ["left", "right"]
     vertical = ["up", "down"]
 

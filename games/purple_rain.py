@@ -12,17 +12,17 @@ class Player(Sprite):
 
     def __init__(self):
         super().__init__([HORIZONTAL])
-        self.position = [7,3]  # starting location
+        self.position = [3, 7]  # starting location
         self.change = 0  # x-axis
         self.colour = GREEN
 
     def update(self,lives):
         # update paddle to new position
-        self.position[1] += self.change
+        self.position[0] += self.change
         self.change = 0  # stop moving when no input
         # check_boundaries
-        self.position[1] = 0 if self.position[1] < 0 else self.position[1]
-        self.position[1] = 7 if self.position[1] > 7 else self.position[1]
+        self.position[0] = 0 if self.position[0] < 0 else self.position[0]
+        self.position[0] = 7 if self.position[0] > 7 else self.position[0]
         if lives == 2:
             self.colour = YELLOW
         elif lives == 1:
@@ -32,23 +32,23 @@ class Player(Sprite):
 class Rain():
 
     def __init__(self):
-        self.position = [random.randint(-20,-1), random.randint(0,7)]
+        self.position = [random.randint(0,7), random.randint(-20,-1)]
         self.change = 0.5  # y-axis
         self.display = False
         self.int_pos = None
 
     def update(self,paddle):
         # reset to top if off screen
-        if self.position[0] == 7:
-            self.position = [random.randint(-20,-1), random.randint(0,7)]
+        if self.position[1] == 7:
+            self.position = [random.randint(0,7), random.randint(-20,-1)]
             self.display = False
             self.int_pos = None
         # set new position and display
-        self.position[0]+= self.change
+        self.position[1]+= self.change
         # Adjust for easy display if in grid
-        if self.position[0] >= 0  and self.position[0]%1==0:
+        if self.position[1] >= 0  and self.position[1]%1==0:
             self.display = True
-            self.int_pos = [int(self.position[0]),int(self.position[1])]
+            self.int_pos = [int(self.position[0]), int(self.position[1])]
 
 
 class Game:
@@ -81,8 +81,8 @@ class Game:
         grid = np.empty([8, 8, 3], dtype=int)
         grid[:, :, :] = DARK_BLUE
         if self.rain and self.player:
-            grid[self.player.position[0], self.player.position[1]] = self.player.colour
+            grid[self.player.position[1], self.player.position[0]] = self.player.colour
             for r in self.rain:
                 if r.display:
-                    grid[r.int_pos[0], r.int_pos[1]] = PURPLE
+                    grid[r.int_pos[1], r.int_pos[0]] = PURPLE
         return grid

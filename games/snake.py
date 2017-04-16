@@ -85,7 +85,7 @@ class Game:
         grid = np.empty([8, 8, 3], dtype=int)
         grid[:, :, :] = DARK_RED
         if self.food and self.snake:
-            grid[self.food.pos[0], self.food.pos[1]] = self.food.colour
+            grid[self.food.pos[1], self.food.pos[0]] = self.food.colour
             for segmant in self.snake.body_list:
-                grid[segmant[0], segmant[1]] = GREEN
+                grid[segmant[1], segmant[0]] = GREEN
         return grid
