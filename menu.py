@@ -7,6 +7,7 @@ class Menu:
     game_over = False
     start = False
     fps = 0.1
+    selected = None
 
     def handle_events(self, events):
         for event in events:
