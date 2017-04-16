@@ -54,6 +54,7 @@ class Ghost(Sprite):
     ai_forward = None
 
     def __init__(self,colour,target_offset,start_offset):
+        super().__init__([HORIZONTAL, VERTICAL])
         self.position = [3+start_offset,0]
         self.change = choice([[1, 0], [-1, 0]])
         self.mode = 'chase'
@@ -65,12 +66,15 @@ class Ghost(Sprite):
         self.change = choice([[1, 0], [-1, 0]])
 
     def get_distance(self, ai, target, grid):
-        if not all(grid[ai[1], ai[0]] == BLUE):
-            x_ = ai[0]-target[0]
-            y_len = ai[1]-target[1]
-            return x_len**2 + y_len**2
-        else:
-            return 200
+        try:
+            if not all(grid[ai[1], ai[0]] == BLUE):
+                x_len = ai[0]-target[0]
+                y_len = ai[1]-target[1]
+                return x_len**2 + y_len**2
+        except IndexError:
+            pass  # ai is off the grid so we'll return 200
+        return 200
+
 
     def get_target_position(self, pacman):
         target = [2 + self.target_offset, 2]  # Go to two top corners, not chase
@@ -174,4 +178,6 @@ class Game(object):
     def update_display(self):
         grid = self.maze.grid.copy()
         grid[self.pacman.position[1], self.pacman.position[0]] = YELLOW
+        grid[self.blinky.position[1], self.blinky.position[0]] = self.blinky.colour
+        grid[self.inky.position[1], self.inky.position[0]] = self.inky.colour
         return grid
