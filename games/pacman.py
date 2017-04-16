@@ -59,7 +59,7 @@ class Ghost(Sprite):
 
     def __init__(self, colour, target_offset):
         # Ghosts don't double back, but logic implemented in update because AI
-        super().__init__([HORIZONTAL, VERTICAL], no_double_back=True)
+        super().__init__([HORIZONTAL, VERTICAL])
         self.position = [3 + Ghost.count, 0]
         self.number = Ghost.count
         Ghost.count += 1
@@ -77,17 +77,17 @@ class Ghost(Sprite):
 
     def get_distance(self, ai, target, grid):
         """Calculate euclidean distance squared"""
-        try:
-            # Check it's not blue, if it is then direction is invalid
-            if not all(grid[ai[1], ai[0]] == BLUE):
-                x_len = ai[0] - target[0]
-                y_len = ai[1] - target[1]
-                return x_len**2 + y_len**2
-            # Invalid direction, max distance is 98, so 255 can't be picked.
-            else:
-                return 255
-        except IndexError:
-            return 255  # ai is off the grid so return 255 so not picked.
+        # Off the edge of the display
+        if -1 in ai or 8 in ai:
+            return 255        
+        # Check it's not blue, if it is then direction is invalid
+        if not all(grid[ai[1], ai[0]] == BLUE):
+            x_len = ai[0] - target[0]
+            y_len = ai[1] - target[1]
+            return x_len**2 + y_len**2
+        # Invalid direction, max distance is 98, so 255 can't be picked.
+        else:
+            return 255
 
     def get_target_position(self, pacman):
         """Calculate where ghost is trying to get"""
@@ -105,12 +105,12 @@ class Ghost(Sprite):
         # Positions of AI measurement locations
         ai_locations = {"up":  [self.position[0],
                                  self.position[1] - 1],
-                         "down": [self.position[0],
-                                  self.position[1] + 1],
-                         "left": [self.position[0] - 1,
-                                  self.position[1]],
-                         "right": [self.position[0] + 1,
-                                   self.position[1]]
+                        "down": [self.position[0],
+                                 self.position[1] + 1],
+                        "left": [self.position[0] - 1,
+                                 self.position[1]],
+                        "right": [self.position[0] + 1,
+                                  self.position[1]]
                         }
         #choose target
         target = self.get_target_position(pacman)
@@ -125,7 +125,6 @@ class Ghost(Sprite):
             self.opposite_direction = self.horizontal[1 - self.horizontal.index(direction)]
         elif direction in self.vertical:
             self.opposite_direction = self.vertical[1 - self.vertical.index(direction)]
-        print(self.number, distances, direction, self.opposite_direction)
         # Calculate new position
         new_x = self.position[0] + self.change[0]
         new_y = self.position[1] + self.change[1]
@@ -167,6 +166,7 @@ class Game(object):
         # check for game over first
         if self.lives == 0:
             self.game_over = True
+            return
 
         # check if pacman has been caught
         if self.pacman.position == self.blinky.position or self.pacman.position == self.inky.position:
