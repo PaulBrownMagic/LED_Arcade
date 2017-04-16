@@ -44,7 +44,7 @@ class Pacman(Sprite):
         new_y = 0 if new_y > 7 else new_y
         new_y = 7 if new_y < 0 else new_y
         # Grid check
-        if grid[new_x, new_y] != BLUE:
+        if not all(grid[new_x, new_y] == BLUE):
             self.position = [new_x, new_y]
 
 """
@@ -178,7 +178,7 @@ class Game(object):
                 time.sleep(1)
         """
         self.pacman.update(self.maze.grid)
-        if self.maze.grid[self.pacman.position[0], self.pacman.position[1]]== ORANGE:
+        if all(self.maze.grid[self.pacman.position[0], self.pacman.position[1]] == ORANGE):
             self.score += 1
         #self.blinky.update(self.pacman,self.maze.grid)
         #self.inky.update(self.pacman,self.maze.grid)
