@@ -57,7 +57,7 @@ class Arcade:
     # Specific loops for game and menu
     def game_loop(self):
         """Run the program until exit state is called"""
-        while not self.game.game_over:
+        while self.game and not self.game.game_over:
             self.frame()
         # Game Over, play animation
         animations.game_over(self.display)
