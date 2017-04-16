@@ -59,9 +59,10 @@ class Arcade:
             self.frame()
         # Game Over, play animation
         animations.game_over(self.display)
-        # Reset for menu and clear game
+        # Reset for menu, clear game and events
         self.game = None
         self.view = self.menu
+        self.controller.get_events()
 
     def menu_loop(self):
         """Run the program until exit state is called"""

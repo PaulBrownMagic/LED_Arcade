@@ -52,7 +52,7 @@ class Rain():
 
 
 class Game:
-    fps = 0.05
+    fps = 1/12
 
     def __init__(self):
         self.lives = 3
