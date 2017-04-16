@@ -4,7 +4,7 @@ from displays.sensehat_display import SenseHatDisplay
 from inputs.sensehat_input import SenseHatInput
 from menu import Menu
 import numpy as np
-from games import purple_rain
+from games import purple_rain, snake
 import time
 
 
@@ -20,41 +20,67 @@ class Arcade:
     def __init__(self):
         self.display = SenseHatDisplay()
         self.controller = SenseHatInput()
-        self.game = Menu()
+        self.menu = Menu()
+        self.view = self.menu  # What part of the program currently shown/run
+        self.game = None
         self.state = "Welcome"
 
         animations.welcome(self.display)
 
+    # Generic functions for all views
     def get_input(self):
-        """Get input from controller, pass to state"""
+        """Get input from controller, pass to view"""
         events = self.controller.get_events()
         for event in events:
-            if event == "up":
+            if event == "middle":
                 self.state = "Exit"
-        self.game.handle_events(events)
+        self.view.handle_events(events)
 
     def run_logic(self):
-        """Call state's run_logic and handle state change"""
-        self.game.run_logic()
+        """Call view's run_logic"""
+        self.view.run_logic()
 
     def update_display(self):
-        """show the grid on self.display"""
-        if self.game.game_over:
-            animations.game_over(self.display)
-            self.game.game_over = False
-            self.game.start = True
+        """show the view on self.display"""
         if self.state == "Exit":
             self.display.clear()
         else:
-            self.display.update(self.game.update_display())
+            self.display.update(self.view.update_display())
 
+    # Specific loops for game and menu
     def game_loop(self):
         """Run the program until exit state is called"""
-        while self.state != "Exit":
+        while not self.game.game_over:
             self.get_input()
             self.run_logic()
             self.update_display()
             time.sleep(self.game.fps)
+        # Game Over, play animation
+        animations.game_over(self.display)
+        # Reset for menu and clear game
+        self.game = None
+        self.view = self.menu
+
+    def menu_loop(self):
+        """Run the program until exit state is called"""
+        while not self.menu.selected:
+            self.get_input()
+            self.run_logic()
+            self.update_display()
+            time.sleep(self.menu.fps)
+        # Select chosen game
+        if self.menu.selected == "Snake":
+            self.game = snake.Game()
+        elif self.menu.selected == "Purple Rain":
+            self.game = purple_rain.Game()
+        # Load new game into view
+        self.view = self.game
+
+    # Show the menu, play a game. Rinse and repeat.
+    def program_loop(self):
+        while not self.state == "Exit":
+            self.menu_loop()
+            self.game_loop()
 
 
 if __name__ == "__main__":
