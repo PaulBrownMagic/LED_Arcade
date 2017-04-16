@@ -63,6 +63,7 @@ class Ghost(Sprite):
         self.position = [3 + Ghost.count, 0]
         self.number = Ghost.count
         Ghost.count += 1
+        self.number = self.count
         self.change = choice([[1, 0], [-1, 0]])
         self.opposite_direction = "up"
         self.mode = 'chase'
