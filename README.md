@@ -1,34 +1,42 @@
 # Raspberry Pi LED arcade
 
-Building on previous projects, including the Snake game with the Unicorn Hat
-from Pimoroni, this project aims to assemble a collection of games with a user
-interface to navigate them.
+Building on previous projects, including the Snake game with the Unicorn Hat from Pimoroni, this project aims to assemble a collection of games with a user interface to navigate them.
 
 The project will be display agnostic, so a parameter can be set to choose
-whether to use the Unicorn Hat, Sense Hat, or another 8*8 RGB LED display.
-It will also be input agnostic, so again with a parameter the input can be
-changed between SenseHat's onboard joystick, a keyboard or other gaming pad.
+whether to use the Unicorn Hat, Sense Hat, or another 8*8 RGB LED display. It will also be input agnostic, so again with a parameter the input can be changed between SenseHat's onboard joystick, a keyboard or other gaming pad.
 
-Games to be included are tributes to classics old and new, including snake,
-pac-man, flappy bird and more.
+Games tagged for inclusion are tributes to classics old and new, including snake, pac-man, flappy bird and more.
 
-Currently the project is developing the user interface and menu system before
-beginning on the games. If you'd like to get involved, check out the TODO list
-for the next jobs that need doing. Some of these are pretty easy!
+Currently the project is developing the user interface and menu system before beginning to amass games. If you'd like to get involved, check out the TODO list for the next jobs that need doing. Some of these are pretty easy, some are pretty fun!
 
+## Lists of jobs
 \<TODO\>:
 - [ ] UPPERCASE letters and more punctuation in letters.py ALPHABET
-- [ ] Pretty animations for inbetweens in animations.py
-- [x] Design menu system, perhaps colour coded or icons. Words will be  annoying
+- [ ] Pretty animations for in-betweens in animations.py
 - [ ] Make a score display animation, e.g.: "Score: 12" in animations.py
-- [x] Implement a FPS (frames per second) system, better than time.sleep()!
-- [x] Pick a harder to input exit method: moved to menu.
-- [ ] Template game with explanation.
+- [ ] Template game with explanation to help other developers.
+- [ ] Config file to read in input and diplay choice, over-ride with command line args.
+- [ ] Command to write config file.
+- [ ] Fix displays.__init__.Writer numpy >= 1.12.1 dependency to work with 1.8.1 on Raspberry Pi
+- [ ] Test with unicorn hat again, cry about the inevitable rotation/direction issues...
+- [ ] Constants to describe input values, i.e. inputs.LEFT = "left"
 
-\<One day...\>:
+<li style="display: None;">- [ ] Make HORIZONAL and VERTICAL less confusing by making them the lists/dicts of movements</li>
+
+\<LONG-TERM TODO\>:
 - [ ] Move menu screen to game class?
 - [ ] Animated menu screens
 - [ ] Lots of games!
 - [ ] High Score view (press up/down in menu?)
-- [ ] Test with unicorn hat again, cry about the inevitable rotation/direction issues...
+- [ ] High Score 3 letter names input and stored classic arcade style
 - [ ] Add Wii-Mote input, GamePad input, Keyboard input
+
+\<DONE in this release\>:
+- Design menu system, perhaps colour coded or icons. Words will be  annoying
+- Implement a FPS (frames per second) system, better than time.sleep()!
+- Pick a harder to input exit method: moved to menu.
+
+## Rules of engagement
+1. Minimal dependencies: make this super easy to install and to learn from
+2. Program for Python 3.x where x is the standard version available in Pixel on the Raspberry Pi, same for numpy etc.
+3. Must run "headless": all communication to the user is through the LED display: be imaginative, clear and simple.
