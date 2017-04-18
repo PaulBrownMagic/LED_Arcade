@@ -17,11 +17,9 @@ Currently the project is developing the user interface and menu system before be
 - [ ] Template game with explanation to help other developers.
 - [ ] Config file to read in input and diplay choice, over-ride with command line args.
 - [ ] Command to write config file.
-- [ ] Fix displays.__init__.Writer numpy >= 1.12.1 dependency to work with 1.8.1 on Raspberry Pi
+- [ ] Fix displays.\_\_init\_\_.Writer numpy >= 1.12.1 dependency to work with 1.8.1 on Raspberry Pi
 - [ ] Test with unicorn hat again, cry about the inevitable rotation/direction issues...
 - [ ] Constants to describe input values, i.e. inputs.LEFT = "left"
-
-<li style="display: None;">- [ ] Make HORIZONAL and VERTICAL less confusing by making them the lists/dicts of movements</li>
 
 \<LONG-TERM TODO\>:
 - [ ] Move menu screen to game class?
