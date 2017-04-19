@@ -1,11 +1,13 @@
-from games.constants import ORANGE, BLACK, BLUE
 import numpy as np
+
+from games.constants import BLACK, BLUE, ORANGE
+
 """----------------------------
 Mazes for pacman
 -------------------------------"""
 o = ORANGE
-b= BLUE
-k= BLACK
+b = BLUE
+k = BLACK
 
 maze1 = np.array([[o, o, o, k, k, o, o, o],
                   [o, b, o, b, b, o, b, o],

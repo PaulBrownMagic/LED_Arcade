@@ -2,9 +2,9 @@
 import animations
 from clock import Clock
 from displays.sensehat_display import SenseHatDisplay
+from games import pacman, purple_rain, snake
 from inputs.sensehat_input import SenseHatInput
 from menu import Menu
-from games import purple_rain, snake, pacman
 
 
 class Arcade:
@@ -30,7 +30,7 @@ class Arcade:
     def get_input(self):
         """Get input from controller, pass to view"""
         events = self.controller.get_events()
-        self.view.handle_events(events)
+        self.view.process_events(events)
 
     def run_logic(self):
         """Call view's run_logic"""
