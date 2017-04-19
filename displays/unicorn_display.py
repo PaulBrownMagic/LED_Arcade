@@ -1,5 +1,5 @@
-from displays import Display
 import unicornhat as unicorn
+from displays import Display
 
 
 class UnicornDisplay(Display):

@@ -1,4 +1,4 @@
-from sense_hat import SenseHat, ACTION_RELEASED
+from sense_hat import ACTION_RELEASED, SenseHat
 
 
 class SenseHatInput:
@@ -8,4 +8,4 @@ class SenseHatInput:
 
     def get_events(self):
         return [event.direction for event in self.sense_hat.stick.get_events()
-                                if event.action != ACTION_RELEASED]
+                if event.action != ACTION_RELEASED]

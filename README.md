@@ -7,7 +7,7 @@ whether to use the Unicorn Hat, Sense Hat, or another 8*8 RGB LED display. It wi
 
 Games tagged for inclusion are tributes to classics old and new, including snake, pac-man, flappy bird and more.
 
-Currently the project is developing the user interface and menu system before beginning to amass games. If you'd like to get involved, check out the TODO list for the next jobs that need doing. Some of these are pretty easy, some are pretty fun!
+Currently the project is developing the user interface and menu system before beginning to amass games, displays and inputs. If you'd like to get involved, check out the TODO list for the next jobs that need doing. Some of these are pretty easy, some are pretty fun!
 
 ## Lists of jobs
 \<TODO\>:
@@ -26,7 +26,7 @@ Currently the project is developing the user interface and menu system before be
 - [ ] Animated menu screens
 - [ ] Lots of games!
 - [ ] High Score view (press up/down in menu?)
-- [ ] High Score 3 letter names input and stored classic arcade style
+- [ ] High Score with 3 letter names input and stored: classic arcade style
 - [ ] Add Wii-Mote input, GamePad input, Keyboard input
 
 \<DONE in this release\>:

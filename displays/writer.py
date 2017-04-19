@@ -1,4 +1,5 @@
 import numpy as np
+
 from displays.letters import ALPHABET
 
 
@@ -20,8 +21,8 @@ class Writer:
     def generate_frames(self):
         """Produce single 8*8 frames scrolling across phrase"""
         height, width = np.shape(self.phrase)
-        for frame in range(width-8):
-            yield self.phrase[:, frame:frame+8]
+        for frame in range(width - 8):
+            yield self.phrase[:, frame:frame + 8]
 
     def write(self, phrase):
         """Easily get frames for a phrase"""

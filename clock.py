@@ -3,6 +3,7 @@ import time
 
 class Clock:
     """Sleeps until at least time for next frame"""
+
     def reset_clock(self, fps):
         self.fps = fps
         self.start_time = time.perf_counter()

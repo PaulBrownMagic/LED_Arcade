@@ -1,4 +1,4 @@
-from constants import NAV_SCREENS, EXIT_SCREEN
+from constants import EXIT_SCREEN, NAV_SCREENS
 
 
 class Menu:
@@ -8,12 +8,12 @@ class Menu:
     def __init__(self):
         self.current = 0
         self.screens = NAV_SCREENS
-        self.screens.update(EXIT_SCREEN) # Can remove quit option
+        self.screens.update(EXIT_SCREEN)  # Can remove quit option
         self.screen_names = list(self.screens.keys())
         self.number_of_screens = len(self.screens) - 1
         self.selected = None
 
-    def handle_events(self, events):
+    def process_events(self, events):
         for event in events:
             if event == "left":
                 self.current -= 1
