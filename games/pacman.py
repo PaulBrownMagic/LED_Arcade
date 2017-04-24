@@ -31,12 +31,11 @@ class Pacman(Sprite):
 
     def __init__(self):
         super().__init__([HORIZONTAL, VERTICAL])
-        self.change = [0, 0]
         self.position.set([3, 4])
 
     def reset(self):
         """Go back to start position"""
-        self.change = [0, 0]
+        self.change = [0, 0]  # Stop moving
         self.position.set([3, 4])
 
     def update(self, grid):
@@ -49,8 +48,8 @@ class Pacman(Sprite):
 class Ghost(Sprite):
     """Blinky and Inky with AI to chase Pacman"""
     count = 0
-    horizontal = ["left", "right"]
-    vertical = ["up", "down"]
+    horizontal = list(HORIZONTAL)
+    vertical = list(VERTICAL)
 
     def __init__(self, colour, target_offset):
         # Ghosts don't double back, but logic implemented in update because AI

@@ -46,26 +46,16 @@ class Co_ordinates:
 
 class Sprite:
 
-    vertical_movements = {"up": (0, -1),
-                          "down": (0, 1),
-                          }
-    horizontal_movements = {"left": (-1, 0),
-                            "right": (1, 0)}
-    horizontal = ["left", "right"]
-    vertical = ["up", "down"]
-
-    def __init__(self, movement_axis, no_double_back=False, solid_boundaries=True):
+    def __init__(self, movement_axis=None, no_double_back=False, solid_boundaries=True):
         self.movement = dict()
         self.valid_axis = 0
-        if HORIZONTAL in movement_axis:
-            self.movement.update(self.horizontal_movements)
-            self.valid_axis += 1
-        if VERTICAL in movement_axis:
-            self.movement.update(self.vertical_movements)
-            self.valid_axis += 1
+        if movement_axis:
+            for axis in movement_axis:
+                self.movement.update(axis)
+                self.valid_axis += 1
         self.no_double_back = no_double_back
         self.last_direction = None
-        self.change = None
+        self.change = 0 if self.valid_axis == 1 else [0, 0]
         self.position = Co_ordinates()
         self.solid_boundaries = solid_boundaries
 
@@ -73,9 +63,9 @@ class Sprite:
         """Respond to event direction by updating self.change"""
         # If Sprite can't double back and movement invalid, return
         if self.no_double_back:
-            if direction in self.horizontal and self.last_direction in self.horizontal:
+            if direction in HORIZONTAL and self.last_direction in HORIZONTAL:
                 return
-            elif direction in self.vertical and self.last_direction in self.vertical:
+            elif direction in VERTICAL and self.last_direction in VERTICAL:
                 return
             else:
                 self.last_direction = direction
@@ -131,9 +121,9 @@ class Sprite:
 
     def move(self, position=None):
         """Move the sprite, returns new_x, new_y, doesn't update self.position"""
-        if self.valid_axis == 1 and "left" in self.movement.keys():
+        if self.valid_axis == 1 and "left" in self.movement:
             return self._1_axis_move(axis=0, position=position)
-        elif self.valid_axis == 1 and "up" in self.movement.keys():
+        elif self.valid_axis == 1 and "up" in self.movement:
             return self._1_axis_move(axis=1, position=position)
         elif self.valid_axis == 2:
             return self._2_axis_move(position)

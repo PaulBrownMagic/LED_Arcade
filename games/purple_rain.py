@@ -14,7 +14,7 @@ class Player(Sprite):
     def __init__(self):
         super().__init__([HORIZONTAL])
         self.position.set([3, 7])  # starting location
-        self.change = 0  # x-axis
+        self.change = 0   # x-axis
         self.colour = GREEN
 
     def update(self, lives):
@@ -31,7 +31,7 @@ class Rain(Sprite):
     """ Purple pixels that fall from the sky, uses own movement logic"""
 
     def __init__(self):
-        super().__init__(movement_axis=[None])  # movement_axis not applicable
+        super().__init__(movement_axis=None)  # movement_axis not applicable
         # abstract_position off display as an easy way to randomise timing
         self.abstract_position = {"x": random.randint(0, 7),
                                   "y": random.randint(-20, -1)}

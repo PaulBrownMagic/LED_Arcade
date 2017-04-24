@@ -15,7 +15,7 @@ class Snake(Sprite):
             movement_axis=[HORIZONTAL, VERTICAL], no_double_back=True, solid_boundaries=False)
         # starting location
         self.body_list = [Co_ordinates([2, 1]), Co_ordinates([2, 2])]
-        self.change = [1, 0]  # For x and y
+        self.change = [1, 0]  # For x and y, starts moving
 
     def update(self, food):
         """Actually move the snake, eat food, grow or not"""
