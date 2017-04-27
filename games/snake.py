@@ -38,7 +38,7 @@ class Food(Sprite):
     """The little things snakes eat"""
 
     def __init__(self, snake):
-        super().__init__(movement_axis=[None])  # Does not move
+        super().__init__()  # Does not move
         self.colour = None
         self.reset(snake)
 
