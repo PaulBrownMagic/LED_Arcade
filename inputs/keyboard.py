@@ -17,6 +17,11 @@ class KeyboardInput:
         self.q = Queue()  # Use a queue to manage events between processes
         self.p = Process(target=self._read_events)  # Run event collection in own process
         self.p.start()
+        # Other stuff!
+        self.translate = {"KEY_DOWN": DOWN,
+                          "KEY_UP": UP,
+                          "KEY_LEFT": LEFT,
+                          "KEY_RIGHT": RIGHT}
 
     def _read_events(self):
         # self.stdscr.clear()  # Clear the screen
@@ -25,17 +30,10 @@ class KeyboardInput:
 
     def get_events(self):
         events = []
-        while not self.q.empty():  # Prcess the queue
-            k = self.q.get()
-            if "DOWN" in k:
-                events.append(DOWN)
-            elif "UP" in k:
-                events.append(UP)
-            elif "LEFT" in k:
-                events.append(LEFT)
-            elif "RIGHT" in k:
-                events.append(RIGHT)
-            else:
+        while not self.q.empty():  # Process the queue into events
+            try:
+                events.append(self.translate[self.q.get()])
+            except KeyError:
                 events.append(BUTTON)
         return events
 

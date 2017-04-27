@@ -2,6 +2,7 @@ import random
 
 import numpy as np
 
+import queue
 from games import Co_ordinates, Sprite
 from games.constants import (DARK_RED, GREEN, HORIZONTAL, SNAKE_COLOURS,
                              VERTICAL, WHITE)
@@ -16,9 +17,18 @@ class Snake(Sprite):
         # starting location
         self.body_list = [Co_ordinates([2, 1]), Co_ordinates([2, 2])]
         self.change = [1, 0]  # For x and y, starts moving
+        self.moves = queue.Queue()
+
+    def event_response(self, event):
+        self.moves.put(event)  # Just add move to queue for now
 
     def update(self, food):
         """Actually move the snake, eat food, grow or not"""
+        # Make the first move in the queue for this frame
+        try:
+            super().event_response(self.moves.get_nowait())
+        except queue.Empty:
+            pass  # No moves in the queue, so don't move!
         # Make new segmant
         new_segmant = Co_ordinates(position=self.move(self.body_list[0]))
         self.body_list.insert(0, new_segmant)
