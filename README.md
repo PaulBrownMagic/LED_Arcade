@@ -19,8 +19,7 @@ Currently the project is developing the user interface and menu system before be
 - [ ] Command to write config file.
 - [ ] Fix displays.\_\_init\_\_.Writer numpy >= 1.12.1 dependency to work with 1.8.1 on Raspberry Pi
 - [ ] Test with unicorn hat again, cry about the inevitable rotation/direction issues...
-- [ ] Constants to describe input values, i.e. inputs.LEFT = "left"
-<li style="display: None;">- [ ] Make HORIZONAL and VERTICAL less confusing by making them the lists/dicts of movements</li>
+
 
 \<LONG-TERM TODO\>:
 - [ ] Move menu screen to game class?
@@ -34,6 +33,7 @@ Currently the project is developing the user interface and menu system before be
 - Design menu system, perhaps colour coded or icons. Words will be  annoying
 - Implement a FPS (frames per second) system, better than time.sleep()!
 - Pick a harder to input exit method: moved to menu.
+- Constants to describe input values, i.e. inputs.LEFT = "left"
 
 ## Rules of engagement
 1. Minimal dependencies: make this super easy to install and to learn from

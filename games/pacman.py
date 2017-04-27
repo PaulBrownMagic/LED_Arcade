@@ -5,6 +5,7 @@ from random import choice, randint, randrange
 from games import Sprite
 from games.assets import pacman_mazes as mazes
 from games.constants import *
+from inputs import DOWN, LEFT, RIGHT, UP
 
 
 class Maze():
@@ -59,7 +60,7 @@ class Ghost(Sprite):
         Ghost.count += 1
         self.number = self.count
         self.change = choice([[1, 0], [-1, 0]])
-        self.opposite_direction = "up"
+        self.opposite_direction = UP
         self.mode = 'chase'
         self.target_offset = target_offset
         self.colour = colour
@@ -97,14 +98,14 @@ class Ghost(Sprite):
 
     def update(self, pacman, grid):
         # Positions of AI measurement locations
-        ai_locations = {"up":  [self.position.x,
-                                self.position.y - 1],
-                        "down": [self.position.x,
-                                 self.position.y + 1],
-                        "left": [self.position.x - 1,
-                                 self.position.y],
-                        "right": [self.position.x + 1,
-                                  self.position.y]
+        ai_locations = {UP:  [self.position.x,
+                              self.position.y - 1],
+                        DOWN: [self.position.x,
+                               self.position.y + 1],
+                        LEFT: [self.position.x - 1,
+                               self.position.y],
+                        RIGHT: [self.position.x + 1,
+                                self.position.y]
                         }
         # choose target
         target = self.get_target_position(pacman)

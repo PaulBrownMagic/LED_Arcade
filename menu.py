@@ -1,4 +1,5 @@
 from constants import EXIT_SCREEN, NAV_SCREENS
+from inputs import BUTTON, LEFT, RIGHT
 
 
 class Menu:
@@ -15,11 +16,11 @@ class Menu:
 
     def process_events(self, events):
         for event in events:
-            if event == "left":
+            if event == LEFT:
                 self.current -= 1
-            elif event == "right":
+            elif event == RIGHT:
                 self.current += 1
-            elif event == "middle":
+            elif event == BUTTON:
                 self.selected = self.screen_names[self.current]
         # Boundary check
         self.current = 0 if self.current > self.number_of_screens else self.current

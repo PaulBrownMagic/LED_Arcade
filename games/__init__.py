@@ -1,4 +1,5 @@
 from games.constants import HORIZONTAL, VERTICAL
+from inputs import LEFT, UP
 
 
 class Co_ordinates:
@@ -121,9 +122,9 @@ class Sprite:
 
     def move(self, position=None):
         """Move the sprite, returns new_x, new_y, doesn't update self.position"""
-        if self.valid_axis == 1 and "left" in self.movement:
+        if self.valid_axis == 1 and LEFT in self.movement:
             return self._1_axis_move(axis=0, position=position)
-        elif self.valid_axis == 1 and "up" in self.movement:
+        elif self.valid_axis == 1 and UP in self.movement:
             return self._1_axis_move(axis=1, position=position)
         elif self.valid_axis == 2:
             return self._2_axis_move(position)
