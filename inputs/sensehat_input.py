@@ -9,3 +9,6 @@ class SenseHatInput:
     def get_events(self):
         return [event.direction for event in self.sense_hat.stick.get_events()
                 if event.action != ACTION_RELEASED]
+
+    def cleanup(self):
+        pass

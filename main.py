@@ -3,6 +3,7 @@ import animations
 from clock import Clock
 from displays.sensehat_display import SenseHatDisplay
 from games import pacman, purple_rain, snake
+from inputs.keyboard import KeyboardInput
 from inputs.sensehat_input import SenseHatInput
 from menu import Menu
 
@@ -18,7 +19,7 @@ class Arcade:
 
     def __init__(self):
         self.display = SenseHatDisplay()
-        self.controller = SenseHatInput()
+        self.controller = KeyboardInput()
         self.menu = Menu()
         self.view = self.menu  # What part of the program currently shown/run
         self.game = None
@@ -86,10 +87,15 @@ class Arcade:
         while not self.state == "Exit":
             self.game_loop()
             self.menu_loop()
-        print("Goodbye!")
 
 
 if __name__ == "__main__":
-    arcade = Arcade()
-    arcade.program_loop()
-    arcade.display.clear()
+    try:
+        arcade = Arcade()
+        arcade.program_loop()
+    except Exception as e:
+        print(e)
+    finally:
+        arcade.controller.cleanup()
+        arcade.display.clear()
+        print("Goodbye!")
