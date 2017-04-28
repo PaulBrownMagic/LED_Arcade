@@ -2,7 +2,7 @@
 import animations
 from clock import Clock
 from displays import load_display
-from games import pacman, purple_rain, snake
+from games import load_game
 from inputs import load_controller
 from menu import Menu
 
@@ -66,15 +66,11 @@ class Arcade:
         while not self.menu.selected:
             self.frame()
         # Select chosen game
-        if self.menu.selected == "Snake":
-            self.game = snake.Game()
-        elif self.menu.selected == "Purple Rain":
-            self.game = purple_rain.Game()
-        elif self.menu.selected == "Pacman":
-            self.game = pacman.Game()
-        elif self.menu.selected == "Exit":
+        if self.menu.selected == "Exit":
             self.state = "Exit"
             return
+        else:
+            self.game = load_game(self.menu.selected)
         # Load new game into view
         self.menu.selected = None
         self.view = self.game
@@ -93,8 +89,7 @@ if __name__ == "__main__":
         arcade = Arcade()
         arcade.program_loop()
     except Exception as e:
-        print("\nERROR: {}\n\n".format(e))
-        print(e.__traceback__)
+        print("\nERROR: {}\n\n".format(e.with_traceback(e)))
     finally:
         arcade.controller.cleanup()
         arcade.display.clear()

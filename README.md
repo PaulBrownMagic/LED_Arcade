@@ -19,6 +19,7 @@ Currently the project is developing the user interface and menu system before be
 - [ ] Single constants for config variables and game names (tidy up!)
 - [ ] Implement Logging
 - [ ] Set of unit tests for inputs, displays
+- [ ] Known bugs: Pacman pass-through ghosts. Purple rain: 2 in one pixel (-2 lives)
 
 \<LONG-TERM TODO\>:
 - [ ] Move menu screen to game class?
