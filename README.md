@@ -15,11 +15,10 @@ Currently the project is developing the user interface and menu system before be
 - [ ] Pretty animations for in-betweens in animations.py
 - [ ] Make a score display animation, e.g.: "Score: 12" in animations.py
 - [ ] Template game with explanation to help other developers.
-- [ ] Config file to read in input and diplay choice, over-ride with command line args.
-- [ ] Command to write config file.
 - [ ] Fix displays.\_\_init\_\_.Writer numpy >= 1.12.1 dependency to work with 1.8.1 on Raspberry Pi
-- [ ] Test with unicorn hat again, cry about the inevitable rotation/direction issues...
-
+- [ ] Single constants for config variables and game names (tidy up!)
+- [ ] Implement Logging
+- [ ] Set of unit tests for inputs, displays
 
 \<LONG-TERM TODO\>:
 - [ ] Move menu screen to game class?
@@ -27,13 +26,17 @@ Currently the project is developing the user interface and menu system before be
 - [ ] Lots of games!
 - [ ] High Score view (press up/down in menu?)
 - [ ] High Score with 3 letter names input and stored: classic arcade style
-- [ ] Add Wii-Mote input, GamePad input, Keyboard input
+- [ ] Add Wii-Mote input
+- [ ] GamePad input, may require config program.
 
 \<DONE in this release\>:
 - Design menu system, perhaps colour coded or icons. Words will be  annoying
 - Implement a FPS (frames per second) system, better than time.sleep()!
 - Pick a harder to input exit method: moved to menu.
 - Constants to describe input values, i.e. inputs.LEFT = "left"
+- Config file to read in input and diplay choice.
+- Command to write config file.
+- Keyboard input
 
 ## Rules of engagement
 1. Minimal dependencies: make this super easy to install and to learn from
