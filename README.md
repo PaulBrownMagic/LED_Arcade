@@ -15,11 +15,11 @@ Currently the project is developing the user interface and menu system before be
 - [ ] Pretty animations for in-betweens in animations.py
 - [ ] Make a score display animation, e.g.: "Score: 12" in animations.py
 - [ ] Template game with explanation to help other developers.
-- [ ] Fix displays.\_\_init\_\_.Writer numpy >= 1.12.1 dependency to work with 1.8.1 on Raspberry Pi
+- [ ] Fix displays.writer.Writer numpy >= 1.12.1 dependency to work with 1.8.1 on Raspberry Pi
 - [ ] Single constants for config variables and game names (tidy up!)
 - [ ] Implement Logging
 - [ ] Set of unit tests for inputs, displays
-- [ ] Known bugs: Pacman pass-through ghosts. Purple rain: 2 in one pixel (-2 lives)
+- [ ] Known bugs: Pacman pass-through ghosts.
 
 \<LONG-TERM TODO\>:
 - [ ] Move menu screen to game class?

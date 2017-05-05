@@ -38,7 +38,7 @@ class Rain(Sprite):
         self.change = 0.5  # y-axis, half-pixel updates for movement every 2 frames
         self.display = False  # Can't display it when off display
 
-    def update(self, paddle):
+    def update(self):
         # update abstract_position
         self.abstract_position["y"] += self.change
         # reset to top if off bottom of display
@@ -75,9 +75,12 @@ class Game:
         # Update sprites
         self.player.update(self.lives)
         for r in self.rain:
-            r.update(self.player.position)
+            r.update()
+        # Extra loop through for lives so only one life lost per frame
+        for r in self.rain:
             if r.position == self.player.position:
                 self.lives -= 1
+                break
 
     def update_display(self):
         # Make background
